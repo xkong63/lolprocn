@@ -7,8 +7,10 @@
 package com.lolprocn.connection;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -18,10 +20,10 @@ import java.net.URL;
 public class Connection {
     
     
-        private final String USER_AGENT = "Mozilla/5.0";
+        private static final String USER_AGENT = "Mozilla/5.0";
     
     // HTTP GET request
-	public  String sendGet(String url) throws Exception {
+	public static  String sendGet(String url) throws MalformedURLException, IOException  {
  
 		//String url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/xinkong63?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12";
                 
