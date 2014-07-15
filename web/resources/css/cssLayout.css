@@ -14,7 +14,12 @@
     margin: 10px 0px 0px 0px;
 }
 
-
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
 
 #right {
     float: right;
@@ -24,20 +29,24 @@
 }
 
 .center_content {
-    position: relative;
+    //position: relative;
     background-color: #dddddd;
     padding: 5px;
 }
 
-
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 170px;
+}
 
 .right_content {
     background-color: #dddddd;
     padding: 5px;
-   // margin: 0px 170px 0px 170px;
+    margin: 0px 170px 0px 170px;
 }
 
-#top a:link, #top a:visited {
+/*#top a:link, #top a:visited {
   color: white;
   font-weight : bold;
   text-decoration: none;
@@ -47,6 +56,6 @@
   color: black;
   font-weight : bold;
   text-decoration : underline;
-}
+}*/
 
 

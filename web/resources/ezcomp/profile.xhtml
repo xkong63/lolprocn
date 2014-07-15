@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+       <canvas id="circlecanvas" width="700" height="700"></canvas>
+        <script>
+            var canvas = document.getElementById("circlecanvas");
+            var context = canvas.getContext("2d");
+            context.fillStyle="red";
+            context.beginPath();
+            context.moveTo(350,350);          
+            context.arc(350, 350, 350, 0, Math.PI * 2, false);
+            context.closePath();
+            context.fill()
+        </script>
+    </cc:implementation>
+</html>
