@@ -10,16 +10,14 @@ package com.lolprocn.entity;
  *
  * @author xkong63
  */
-public class Summoner {
+public class SummonerDto {
     long id;
     String name;
     int profileIconId;
     long summonerLevel;
     
     
-    Summoner(){
-        
-    }
+
 
     public long getId() {
         return id;
