@@ -12,9 +12,6 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet name="./css/style.css"/>
-        <script>
-            @import("./resource/js/script.js");
-        </script>
         <title>LolProCn</title>
     </h:head>
 
@@ -22,42 +19,52 @@
 
         <div id="top">
             <ui:insert name="top">
-                <h:graphicImage value="./resources/images/header.jpg"></h:graphicImage>
+                <h:graphicImage value="./resources/images/images.jpeg" height="200px" id="banner"></h:graphicImage>
                 <h:form>
-                    <p:inputText/>
-                    <p:commandButton value="Search"/>
+                    <p:inputText value="#{data.summoner}"/>
+                    <p:commandButton value="Search" action="#{data.profileRedirect()}"/>
                 </h:form>
                 <h:panelGrid columns="5">
-                    <p:button  value="HOME"  icon="home">
+                    <p:button  value="HOME" outcome="index.xhtml">
 
                     </p:button>
-                    <p:button  value="t1"  icon="home">
+                    <p:button  value="t1">
 
                     </p:button>
-                    <p:button  value="t2"  icon="home">
+                    <p:button  value="t2">
 
                     </p:button>
-                    <p:button  value="t3"  icon="home">
+                    <p:button  value="t3">
 
-                    </p:button>
-                    <p:button  value="t4"  icon="home">
-
-                    </p:button>
+                    </p:button>>
                 </h:panelGrid>
             </ui:insert>
         </div>
         <div>
             <div id="right">
-                <ui:insert name="left">right</ui:insert>
+                <ui:insert name="right">
+                    <p:tabView>
+                        <p:tab title="Champion Rotation">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <!--                            <p:graphicImage name="" />-->
+                                <h:outputText
+                                    value="free to play" />
+                            </h:panelGrid>
+                        </p:tab>
+
+                    </p:tabView>
+                </ui:insert>
             </div>
             <div id="content" class="center_content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
         <div id="bottom">
-            <ui:insert name="bottom">Copyright</ui:insert>
+            <ui:insert name="bottom">Copyright 2014 LOLProCn</ui:insert>
         </div>
 
+        <script type="text/javascript" src="./resources/js/jquery-1.11.1.js"/>
+        <script type="text/javascript" src="./resources/js/script.js"/>
     </h:body>
 
 </html>

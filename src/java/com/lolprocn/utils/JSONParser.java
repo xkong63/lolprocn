@@ -28,9 +28,9 @@ public class JSONParser {
         SummonerDto summonerDto = new SummonerDto();
         
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+name+"?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
-        JSONObject jObject  = new JSONObject(response);
+        JSONObject jObject0  = new JSONObject(response);
        
-        
+        JSONObject jObject = jObject0.getJSONObject(name.toLowerCase());
         summonerDto.setId(jObject.getLong("id"));
         summonerDto.setName(jObject.getString("name"));
         summonerDto.setProfileIconId(jObject.getInt("profileIconId"));
@@ -62,7 +62,7 @@ public class JSONParser {
     
     PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
         PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
-        playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
+        //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
         
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));

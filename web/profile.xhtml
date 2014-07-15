@@ -12,23 +12,103 @@
                     <div id="summoner-icon" style="padding: 20px">
                         <img id="cover-image" src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon663.jpg"></img>
                     </div>
-
                     <div style="height: 64px; margin-left: 70px;">
-                        <div id="summoner-titlebar-summoner-name">KelvinD</div>
+                        <div id="summoner-titlebar-summoner-name">
+                            <h:outputText value="#{data.summonerDto.name}"/>
+                        </div>
                         <div id="summoner-titlebar-summoner-meta">
-                            LEVEL 30&nbsp;&nbsp;&nbsp;&nbsp;North America</div>
+                            <h:outputText value="Level #{data.summonerDto.summonerLevel}"/>
+                            
+                     </div>
                     </div>
-
                 </div>
 
-                                <p:panelGrid columns="2">
-                
-                                    
-                                        <h:outputLabel value="output1"/>
-                                        <h:outputLabel value="output2"/>
-                
-                                   
-                                </p:panelGrid>
+                <p:panelGrid columns="2"> 
+                    <p:panelGrid columns="2" styleClass="back">
+                        <p:button  value="Profile" styleClass="back">
+
+                        </p:button>
+                        <p:button  value="Matchs" styleClass="back">
+
+                        </p:button>
+                        <p:button  value="Masteries" styleClass="back">
+
+                        </p:button>
+                        <p:button  value="Runes" styleClass="back">
+
+                        </p:button>
+                        <p:button  value="t4" styleClass="back">
+
+                        </p:button>
+                    </p:panelGrid>
+                    <p:panelGrid>
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="2"></p:column>
+                                <p:column colspan="2">Statistics</p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column rowspan="10">
+                                <p:button  value="Solo 5v5" styleClass="back">
+
+                                </p:button>
+                            </p:column>
+                            <p:column rowspan="10">
+                                <p:button  value="Rank 5v5" styleClass="back">
+
+                                </p:button>
+                            </p:column>
+                        </p:row>
+
+
+
+                        <p:row>
+                            <p:column colspan='2'>Normal 5V5</p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column>Wins</p:column>
+                            <p:column>
+                                <h:outputText value="#{data.normal5_5.wins}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Kills</p:column>
+                            <p:column>
+                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalChampionKills}"
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Assists</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Deaths</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>KDA</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Minion kills</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Neutral minion Kills</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>Turret destroyed</p:column>
+                            <p:column>3456</p:column>
+                        </p:row>
+
+
+
+                    </p:panelGrid>
+                </p:panelGrid>
+
             </ui:define>
 
 
