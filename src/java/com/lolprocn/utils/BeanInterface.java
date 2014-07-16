@@ -6,6 +6,8 @@
 
 package com.lolprocn.utils;
 
+import com.lolprocn.entity.ChampionDto;
+import com.lolprocn.entity.ChampionListDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
 import com.lolprocn.entity.SummonerDto;
@@ -37,8 +39,32 @@ public class BeanInterface implements Serializable {
     private PlayerStatsSummaryListDto summonerSummarylist;
     private PlayerStatsSummaryDto normal5_5;
     private JSONParser parser;
+    private ChampionListDto championList;
+    
         public BeanInterface() {
-        parser=new JSONParser();
+        try {
+            parser=new JSONParser();
+            championList=parser.getFreeToPlayChampionList();
+            Iterator itr_champion;
+            List<ChampionDto> championDto=championList.getChampions();
+            itr_champion=championDto.listIterator();
+//            for(;itr_champion.hasNext();){
+//                
+//            }
+        } catch (IOException ex) {
+            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public ChampionListDto getChampionList() {
+        return championList;
+    }
+
+    public void setChampionList(ChampionListDto championList) {
+        this.championList = championList;
     }
 
 
@@ -75,18 +101,20 @@ public class BeanInterface implements Serializable {
         try {
             summonerDto=parser.populateSummonerDto(summoner); 
             summonerSummarylist=parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
-            Iterator itr;
+            
+            Iterator itr_player;
             List<PlayerStatsSummaryDto> playerStatsSummaryDto = summonerSummarylist.getPlayerStatsSummaryDto();
-            itr=playerStatsSummaryDto.listIterator();
-            for(int i=0;itr.hasNext();itr.next()){
-                PlayerStatsSummaryDto e = (PlayerStatsSummaryDto)itr.next();               
+            
+            itr_player=playerStatsSummaryDto.listIterator();
+            
+            for(;itr_player.hasNext();){
+                PlayerStatsSummaryDto e = (PlayerStatsSummaryDto)itr_player.next();               
                 if(e.getPlayerStatSummaryType().equals("Unranked")){
                     normal5_5=e;
-                }
-                        
+                }                       
             }
             
- 
+            
             return "profile";
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);

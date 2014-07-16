@@ -7,6 +7,7 @@
 package com.lolprocn.utils;
 
 import com.lolprocn.connection.Connection;
+import com.lolprocn.entity.AggregatedStatsDto;
 import com.lolprocn.entity.ChampionDto;
 import com.lolprocn.entity.ChampionListDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
@@ -62,10 +63,13 @@ public class JSONParser {
     
     PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
         PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
+        AggregatedStatsDto aggregatedStatsDto=playerStatsSummaryDto.getAggregatedStatsDto();
         //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
         
+        
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));
+        
         return playerStatsSummaryDto;
     }
     

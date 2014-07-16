@@ -42,13 +42,21 @@
         </div>
         <div>
             <div id="right">
-                <ui:insert name="right">
+                <ui:insert name="right">right
                     <p:tabView>
                         <p:tab title="Champion Rotation">
                             <h:panelGrid columns="2" cellpadding="10">
-                                <!--                            <p:graphicImage name="" />-->
+
+                                <p:graphicImage name="./images/bundle/4.12.2/img/champion/Aatrox.png" />
                                 <h:outputText
-                                    value="free to play" />
+                                    value="#{data.championList.champions.get(1).id}" />
+
+                                <p:dataList value="#{data.championList.champions}" var="champion" >
+                                    <f:facet name="header">
+                                        Weekly free champion
+                                    </f:facet>
+                                    #{champion.id}
+                                </p:dataList>
                             </h:panelGrid>
                         </p:tab>
 

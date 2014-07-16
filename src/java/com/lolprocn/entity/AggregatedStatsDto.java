@@ -515,6 +515,10 @@ public class AggregatedStatsDto {
     public void setTotalUnrealKills(int totalUnrealKills) {
         this.totalUnrealKills = totalUnrealKills;
     }
+
+    public void setTotalChampionAssits(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
         
         
         
