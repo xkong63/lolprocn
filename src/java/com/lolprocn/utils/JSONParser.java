@@ -7,6 +7,7 @@
 package com.lolprocn.utils;
 
 import com.lolprocn.connection.Connection;
+import com.lolprocn.entity.AggregatedStatsDto;
 import com.lolprocn.entity.ChampionDto;
 import com.lolprocn.entity.ChampionListDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
@@ -64,7 +65,8 @@ public class JSONParser {
         PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
         //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
-        
+        AggregatedStatsDto aggregatedStatsDto = populateAggregatedStatsDto(jSONObject.getJSONObject("aggregatedStats"));
+        playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));
         return playerStatsSummaryDto;
     }
@@ -94,5 +96,62 @@ public class JSONParser {
         championDto.setId(jObject.getLong("id"));
         championDto.setRankedPlayEnabled(jObject.getBoolean("rankedPlayEnabled"));
         return championDto;
+    }
+    
+    AggregatedStatsDto populateAggregatedStatsDto(JSONObject jSONObject) throws JSONException{
+        AggregatedStatsDto aggregatedStatsDto = new AggregatedStatsDto();
+        if(jSONObject.isNull("averageAssists"))
+            aggregatedStatsDto.setAverageAssists(0);
+        else
+            aggregatedStatsDto.setAverageAssists(jSONObject.getInt("averageAssists"));
+        
+        if(jSONObject.isNull("averageChampionsKilled"))
+            aggregatedStatsDto.setAverageChampionsKilled(0);
+        else
+            aggregatedStatsDto.setAverageChampionsKilled(jSONObject.getInt("averageChampionsKilled"));
+        
+                if(jSONObject.isNull("averageCombatPlayerScore"))
+            aggregatedStatsDto.setAverageCombatPlayerScore(0);
+        else
+            aggregatedStatsDto.setAverageCombatPlayerScore(jSONObject.getInt("averageCombatPlayerScore"));
+            
+                
+        if(jSONObject.isNull("averageNumDeaths"))
+            aggregatedStatsDto.setAverageNumDeaths(0);
+        else
+            aggregatedStatsDto.setAverageNumDeaths(jSONObject.getInt("averageNumDeaths"));
+            
+        if(jSONObject.isNull("maxChampionsKilled"))
+            aggregatedStatsDto.setMaxChampionsKilled(0);
+        else
+            aggregatedStatsDto.setMaxChampionsKilled(jSONObject.getInt("maxChampionsKilled"));
+        
+        if(jSONObject.isNull("maxLargestKillingSpree"))
+            aggregatedStatsDto.setMaxLargestKillingSpree(0);
+        else
+            aggregatedStatsDto.setMaxLargestKillingSpree(jSONObject.getInt("maxLargestKillingSpree"));
+        
+        if(jSONObject.isNull("maxNumDeaths"))
+            aggregatedStatsDto.setMaxNumDeaths(0);
+        else
+            aggregatedStatsDto.setMaxNumDeaths(jSONObject.getInt("maxNumDeaths"));
+        
+        if(jSONObject.isNull("maxNumDeaths"))
+            aggregatedStatsDto.setMaxTimePlayed(0);
+        else
+            aggregatedStatsDto.setMaxTimePlayed(jSONObject.getInt("maxNumDeaths"));
+        
+        if(jSONObject.isNull("totalAssists"))
+            aggregatedStatsDto.setTotalAssists(0);
+        else
+            aggregatedStatsDto.setTotalAssists(jSONObject.getInt("totalAssists"));
+        
+        
+        if(jSONObject.isNull("totalChampionKills"))
+            aggregatedStatsDto.setTotalChampionKills(0);
+        else
+            aggregatedStatsDto.setTotalChampionKills(jSONObject.getInt("totalChampionKills"));
+        
+        return aggregatedStatsDto;
     }
 }
