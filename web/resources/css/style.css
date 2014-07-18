@@ -46,3 +46,12 @@ overflow: hidden;}
     height:30px;
 }
 
+.searchBar{
+    width:700px;
+    margin-left: 300px;
+}
+
+.but{
+    background-image: url('../images/bundle/img/champion/loading/Ashe_6.jpg') ;
+}
+

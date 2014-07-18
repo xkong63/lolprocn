@@ -41,3 +41,10 @@ $(window).ready(function layout(){
     right_width=win_width*0.15;
     $('#right').css('width',right_width);
 })
+
+$('#searchBar').ready(function searchBar_size(){
+    win_size();
+        $('#searchBar').css('width', win_width*0.5);
+        $('#searchBar').css('margin-left',win_width*0.25);
+})
+        

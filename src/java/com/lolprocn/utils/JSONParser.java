@@ -25,7 +25,7 @@ import org.primefaces.json.JSONObject;
  * @author xkong63
  */
 public class JSONParser {
-    SummonerDto populateSummonerDto(String name) throws JSONException, IOException{
+    public SummonerDto populateSummonerDto(String name) throws JSONException, IOException{
         SummonerDto summonerDto = new SummonerDto();
         
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+name+"?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
@@ -40,7 +40,7 @@ public class JSONParser {
         
     }
     
-    PlayerStatsSummaryListDto populatePlayerStatsSummaryListDto(long summonerId) throws IOException, JSONException{
+    public PlayerStatsSummaryListDto populatePlayerStatsSummaryListDto(long summonerId) throws IOException, JSONException{
         
         PlayerStatsSummaryListDto playerStatsSummaryListDto = new PlayerStatsSummaryListDto();
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerId+"/summary?season=SEASON4&api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
@@ -61,19 +61,25 @@ public class JSONParser {
         return playerStatsSummaryListDto;
     }
     
-    PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
+    public PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
         PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
-        AggregatedStatsDto aggregatedStatsDto=playerStatsSummaryDto.getAggregatedStatsDto();
+
+        //AggregatedStatsDto aggregatedStatsDto=playerStatsSummaryDto.getAggregatedStatsDto();
+
         //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
+
         
-        
+
+        AggregatedStatsDto aggregatedStatsDto = populateAggregatedStatsDto(jSONObject.getJSONObject("aggregatedStats"));
+        playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
+
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));
         
         return playerStatsSummaryDto;
     }
     
-    ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException{
+    public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException{
         ChampionListDto championListDto = new ChampionListDto();
               
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
@@ -88,7 +94,7 @@ public class JSONParser {
         return championListDto;
     }
     
-    ChampionDto populateChampionDto(JSONObject jObject) throws JSONException{
+    public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException{
         ChampionDto championDto = new ChampionDto();
         
         championDto.setActive(jObject.getBoolean("active"));
@@ -98,5 +104,78 @@ public class JSONParser {
         championDto.setId(jObject.getLong("id"));
         championDto.setRankedPlayEnabled(jObject.getBoolean("rankedPlayEnabled"));
         return championDto;
+    }
+    
+    public AggregatedStatsDto populateAggregatedStatsDto(JSONObject jSONObject) throws JSONException{
+        AggregatedStatsDto aggregatedStatsDto = new AggregatedStatsDto();
+        if(jSONObject.isNull("averageAssists"))
+            aggregatedStatsDto.setAverageAssists(0);
+        else
+            aggregatedStatsDto.setAverageAssists(jSONObject.getInt("averageAssists"));
+        
+        if(jSONObject.isNull("averageChampionsKilled"))
+            aggregatedStatsDto.setAverageChampionsKilled(0);
+        else
+            aggregatedStatsDto.setAverageChampionsKilled(jSONObject.getInt("averageChampionsKilled"));
+        
+                if(jSONObject.isNull("averageCombatPlayerScore"))
+            aggregatedStatsDto.setAverageCombatPlayerScore(0);
+        else
+            aggregatedStatsDto.setAverageCombatPlayerScore(jSONObject.getInt("averageCombatPlayerScore"));
+            
+                
+        if(jSONObject.isNull("averageNumDeaths"))
+            aggregatedStatsDto.setAverageNumDeaths(0);
+        else
+            aggregatedStatsDto.setAverageNumDeaths(jSONObject.getInt("averageNumDeaths"));
+            
+        if(jSONObject.isNull("maxChampionsKilled"))
+            aggregatedStatsDto.setMaxChampionsKilled(0);
+        else
+            aggregatedStatsDto.setMaxChampionsKilled(jSONObject.getInt("maxChampionsKilled"));
+        
+        if(jSONObject.isNull("maxLargestKillingSpree"))
+            aggregatedStatsDto.setMaxLargestKillingSpree(0);
+        else
+            aggregatedStatsDto.setMaxLargestKillingSpree(jSONObject.getInt("maxLargestKillingSpree"));
+        
+        if(jSONObject.isNull("maxNumDeaths"))
+            aggregatedStatsDto.setMaxNumDeaths(0);
+        else
+            aggregatedStatsDto.setMaxNumDeaths(jSONObject.getInt("maxNumDeaths"));
+        
+        if(jSONObject.isNull("maxNumDeaths"))
+            aggregatedStatsDto.setMaxTimePlayed(0);
+        else
+            aggregatedStatsDto.setMaxTimePlayed(jSONObject.getInt("maxNumDeaths"));
+        
+        if(jSONObject.isNull("totalAssists"))
+            aggregatedStatsDto.setTotalAssists(0);
+        else
+            aggregatedStatsDto.setTotalAssists(jSONObject.getInt("totalAssists"));
+        
+        
+        if(jSONObject.isNull("totalChampionKills"))
+            aggregatedStatsDto.setTotalChampionKills(0);
+        else
+            aggregatedStatsDto.setTotalChampionKills(jSONObject.getInt("totalChampionKills"));
+        
+         if(jSONObject.isNull("totalMinionKills"))
+            aggregatedStatsDto.setTotalMinionKills(0);
+        else
+            aggregatedStatsDto.setTotalMinionKills(jSONObject.getInt("totalMinionKills"));
+         
+                  if(jSONObject.isNull("totalNeutralMinionsKilled"))
+            aggregatedStatsDto.setTotalNeutralMinionsKilled(0);
+        else
+            aggregatedStatsDto.setTotalNeutralMinionsKilled(jSONObject.getInt("totalNeutralMinionsKilled"));
+         
+                                    if(jSONObject.isNull("totalTurretsKilled"))
+            aggregatedStatsDto.setTotalTurretsKilled(0);
+        else
+            aggregatedStatsDto.setTotalTurretsKilled(jSONObject.getInt("totalTurretsKilled"));
+       
+        
+        return aggregatedStatsDto;
     }
 }

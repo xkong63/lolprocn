@@ -18,97 +18,104 @@
                         </div>
                         <div id="summoner-titlebar-summoner-meta">
                             <h:outputText value="Level #{data.summonerDto.summonerLevel}"/>
-                            
-                     </div>
+
+                        </div>
                     </div>
                 </div>
+                <h:form>
+                    <p:panelGrid columns="2"> 
+                        <p:panelGrid columns="2" styleClass="back">
+                            <p:button  value="Profile" styleClass="back">
 
-                <p:panelGrid columns="2"> 
-                    <p:panelGrid columns="2" styleClass="back">
-                        <p:button  value="Profile" styleClass="back">
+                            </p:button>
+                            <p:button  value="Matchs" styleClass="back">
 
-                        </p:button>
-                        <p:button  value="Matchs" styleClass="back">
+                            </p:button>
+                            <p:button  value="Masteries" styleClass="back">
 
-                        </p:button>
-                        <p:button  value="Masteries" styleClass="back">
+                            </p:button>
+                            <p:button  value="Runes" styleClass="back">
 
-                        </p:button>
-                        <p:button  value="Runes" styleClass="back">
+                            </p:button>
+                            <p:button  value="t4" styleClass="back">
 
-                        </p:button>
-                        <p:button  value="t4" styleClass="back">
-
-                        </p:button>
-                    </p:panelGrid>
-                    <p:panelGrid>
-                        <f:facet name="header">
+                            </p:button>
+                        </p:panelGrid>
+                        <p:panelGrid>
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column colspan="2"></p:column>
+                                    <p:column colspan="2">Statistics</p:column>
+                                </p:row>
+                            </f:facet>
                             <p:row>
-                                <p:column colspan="2"></p:column>
-                                <p:column colspan="2">Statistics</p:column>
+                                <p:column rowspan="10" styleClass="but">
+
+                                    <p:commandButton  value="Normal 5v5"  update="title,wins,kills,assists,Minion_kills,Neutral_minion_Kills,Turret_destroyed" action="#{data.statistic.rank_normal_update()}" styleClass="but">
+
+                                    </p:commandButton>
+
+                                </p:column>
+                                <p:column rowspan="10">
+
+                                    <p:commandButton  value="Rank 5v5" update="title,wins,kills,assists,Minion_kills,Neutral_minion_Kills,Turret_destroyed" action="#{data.statistic.normal_rank_update()}" styleClass="but" >
+
+                                    </p:commandButton>
+
+                                </p:column>
+
                             </p:row>
-                        </f:facet>
-                        <p:row>
-                            <p:column rowspan="10">
-                                <p:button  value="Solo 5v5" styleClass="back">
+                            <p:row>
+                                <p:column colspan='2'>
+                                    <p:outputLabel id="title" value="#{data.statistic.title}"/>
+                                </p:column>
 
-                                </p:button>
-                            </p:column>
-                            <p:column rowspan="10">
-                                <p:button  value="Rank 5v5" styleClass="back">
-
-                                </p:button>
-                            </p:column>
-                        </p:row>
-
-
-
-                        <p:row>
-                            <p:column colspan='2'>Normal 5V5</p:column>
-
-                        </p:row>
-                        <p:row>
-                            <p:column>Wins</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.wins}"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>Kills</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalChampionKills}"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>Assists</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalAssists}"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>Minion kills</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalMinionKills}"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>Neutral minion Kills</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalNeutralMinionsKilled}"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>Turret destroyed</p:column>
-                            <p:column>
-                                <h:outputText value="#{data.normal5_5.aggregatedStatsDto.totalTurretsKilled}"/>
-                            </p:column>
-                        </p:row>
-
-
-
+                            </p:row>
+                            <p:row>
+                                <p:column>Wins</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.wins}" id="wins"/>
+                                </p:column>
+                            </p:row>
+                            <p:row rendered="false">
+                                <p:column>Loses</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.losses}" id="losses"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Kills</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.kills}" id="kills"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Assists</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.assists}" id="assists"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Minion kills</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.minion_kills}" id="Minion_kills"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Neutral minion Kills</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.neutral_minion_Kills}" id="Neutral_minion_Kills"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>Turret destroyed</p:column>
+                                <p:column>
+                                    <h:outputText value="#{data.statistic.turret_destroyed}" id="Turret_destroyed"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
                     </p:panelGrid>
-                </p:panelGrid>
-
+                </h:form>
             </ui:define>
 
 

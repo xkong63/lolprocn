@@ -4,30 +4,31 @@
  * and open the template in the editor.
  */
 
-package com.lolprocn.utils;
+package com.lolprocn.inf;
 
-import com.lolprocn.entity.ChampionDto;
 import com.lolprocn.entity.ChampionListDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
 import com.lolprocn.entity.SummonerDto;
+import com.lolprocn.utils.JSONParser;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.json.JSONException;
+
+
+
 
 /**
  *
  * @author Apollowc
  */
-@ManagedBean
-@Named(value = "data")
+@ManagedBean(name="data")
 @SessionScoped
 public class BeanInterface implements Serializable {
 
@@ -37,20 +38,13 @@ public class BeanInterface implements Serializable {
     private String summoner;
     private SummonerDto summonerDto;
     private PlayerStatsSummaryListDto summonerSummarylist;
-    private PlayerStatsSummaryDto normal5_5;
+    private Statistics statistic;
     private JSONParser parser;
-    private ChampionListDto championList;
-    
+    private ChampionListDto freeToPlayChampionList;
         public BeanInterface() {
         try {
             parser=new JSONParser();
-            championList=parser.getFreeToPlayChampionList();
-            Iterator itr_champion;
-            List<ChampionDto> championDto=championList.getChampions();
-            itr_champion=championDto.listIterator();
-//            for(;itr_champion.hasNext();){
-//                
-//            }
+            freeToPlayChampionList = parser.getFreeToPlayChampionList();
         } catch (IOException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
@@ -59,13 +53,14 @@ public class BeanInterface implements Serializable {
         
     }
 
-    public ChampionListDto getChampionList() {
-        return championList;
+    public ChampionListDto getFreeToPlayChampionList() {
+        return freeToPlayChampionList;
     }
 
-    public void setChampionList(ChampionListDto championList) {
-        this.championList = championList;
+    public void setFreeToPlayChampionList(ChampionListDto freeToPlayChampionList) {
+        this.freeToPlayChampionList = freeToPlayChampionList;
     }
+
 
 
         
@@ -87,13 +82,14 @@ public class BeanInterface implements Serializable {
         this.summoner = summoner;
     }
 
-    public PlayerStatsSummaryDto getNormal5_5() {
-        return normal5_5;
+    public Statistics getStatistic() {
+        return statistic;
     }
 
-    public void setNormal5_5(PlayerStatsSummaryDto normal5_5) {
-        this.normal5_5 = normal5_5;
+    public void setStatistic(Statistics statistic) {
+        this.statistic = statistic;
     }
+    
     
     public String profileRedirect(){
         
@@ -101,7 +97,7 @@ public class BeanInterface implements Serializable {
         try {
             summonerDto=parser.populateSummonerDto(summoner); 
             summonerSummarylist=parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
-            
+            this.statistic=new Statistics();
             Iterator itr_player;
             List<PlayerStatsSummaryDto> playerStatsSummaryDto = summonerSummarylist.getPlayerStatsSummaryDto();
             
@@ -110,11 +106,13 @@ public class BeanInterface implements Serializable {
             for(;itr_player.hasNext();){
                 PlayerStatsSummaryDto e = (PlayerStatsSummaryDto)itr_player.next();               
                 if(e.getPlayerStatSummaryType().equals("Unranked")){
-                    normal5_5=e;
-                }                       
+                    statistic.setNormal5_5(e);
+                } 
+                                if(e.getPlayerStatSummaryType().equals("RankedSolo5x5")){
+                    statistic.setRank5_5(e);
+                } 
             }
-            
-            
+                      
             return "profile";
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
