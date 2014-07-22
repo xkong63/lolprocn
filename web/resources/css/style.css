@@ -24,7 +24,6 @@ and open the template in the editor.
 
 #summoner-titlebar {
 position: relative;
-
 height: 142px;
 margin-bottom: 10px;
 margin-left: 2px;
@@ -33,25 +32,51 @@ overflow: hidden;}
 
 #summoner-icon {
 position: relative;
-
-height: 40px;
-margin-bottom: 10px;
+height: 60px;
 margin-left: 2px;
-width: 40px;
-overflow: hidden;}
+width: 60px;
+padding-left: 20px;
+padding-top: 20px;}
 
-.back{
-    //background-image: url('http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon663.jpg');
-    background-color: black;
-    height:30px;
-}
+.summoner-icon {
+position: relative;
+
+height: 60px;
+width: 60px;}
+
 
 .searchBar{
     width:700px;
     margin-left: 300px;
 }
 
-.but{
+#butt1{
     background-image: url('../images/bundle/img/champion/loading/Ashe_6.jpg') ;
+    width:100px;
+    height:500px;
 }
 
+.master_panel{
+    height:500px !important;
+}
+
+.child_panel{
+    visibility: hidden;
+}
+
+.child_panel2{
+    width:100px;
+    height:500px !important;
+}
+
+.child_panel3{
+    width:100px;
+    height:500px !important;
+   // display: none;
+}
+
+.child_panel4{
+    width:100px;
+    height:500px !important;
+       // display: none;
+}

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.lolprocn.inf;
 
 import com.lolprocn.entity.ChampionListDto;
@@ -18,17 +17,16 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.json.JSONException;
-
-
-
 
 /**
  *
  * @author Apollowc
  */
-@ManagedBean(name="data")
+@ManagedBean(name = "data")
+//@RequestScoped
 @SessionScoped
 public class BeanInterface implements Serializable {
 
@@ -41,16 +39,17 @@ public class BeanInterface implements Serializable {
     private Statistics statistic;
     private JSONParser parser;
     private ChampionListDto freeToPlayChampionList;
-        public BeanInterface() {
+
+    public BeanInterface() {
         try {
-            parser=new JSONParser();
+            parser = new JSONParser();
             freeToPlayChampionList = parser.getFreeToPlayChampionList();
         } catch (IOException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public ChampionListDto getFreeToPlayChampionList() {
@@ -61,9 +60,6 @@ public class BeanInterface implements Serializable {
         this.freeToPlayChampionList = freeToPlayChampionList;
     }
 
-
-
-        
     public SummonerDto getSummonerDto() {
         return summonerDto;
     }
@@ -71,8 +67,6 @@ public class BeanInterface implements Serializable {
     public void setSummonerDto(SummonerDto summonerDto) {
         this.summonerDto = summonerDto;
     }
-    
-
 
     public String getSummoner() {
         return summoner;
@@ -89,31 +83,31 @@ public class BeanInterface implements Serializable {
     public void setStatistic(Statistics statistic) {
         this.statistic = statistic;
     }
-    
-    
-    public String profileRedirect(){
-        
-        
+
+    public String profileRedirect() {
+
         try {
-            summonerDto=parser.populateSummonerDto(summoner); 
-            summonerSummarylist=parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
-            this.statistic=new Statistics();
+            System.out.println(summoner+" is!");
+            summonerDto = parser.populateSummonerDto(summoner);
+            summonerSummarylist = parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
+            System.out.println(summonerDto.getId());
+            this.statistic = new Statistics();
             Iterator itr_player;
             List<PlayerStatsSummaryDto> playerStatsSummaryDto = summonerSummarylist.getPlayerStatsSummaryDto();
-            
-            itr_player=playerStatsSummaryDto.listIterator();
-            
-            for(;itr_player.hasNext();){
-                PlayerStatsSummaryDto e = (PlayerStatsSummaryDto)itr_player.next();               
-                if(e.getPlayerStatSummaryType().equals("Unranked")){
+
+            itr_player = playerStatsSummaryDto.listIterator();
+
+            for (; itr_player.hasNext();) {
+                PlayerStatsSummaryDto e = (PlayerStatsSummaryDto) itr_player.next();
+                if (e.getPlayerStatSummaryType().equals("Unranked")) {
                     statistic.setNormal5_5(e);
-                } 
-                                if(e.getPlayerStatSummaryType().equals("RankedSolo5x5")){
+                }
+                if (e.getPlayerStatSummaryType().equals("RankedSolo5x5")) {
                     statistic.setRank5_5(e);
-                } 
+                }
             }
-                      
-            return "profile";
+
+            return "profile?faces-redirect=true";
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -121,6 +115,5 @@ public class BeanInterface implements Serializable {
         }
         return "index";
     }
-      
-    
+
 }

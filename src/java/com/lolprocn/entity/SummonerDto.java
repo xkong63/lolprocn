@@ -16,7 +16,6 @@ public class SummonerDto {
     int profileIconId;
     long summonerLevel;
     
-    
 
 
     public long getId() {

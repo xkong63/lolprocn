@@ -9,39 +9,39 @@
         <ui:composition template="./template/template.xhtml">
             <ui:define name="content">
                 <div id="summoner-titlebar" style="background-image: url('http://lkimg.zamimg.com/shared/images/champion_headers/157_0.jpg')">
-                    <div id="summoner-icon" style="padding: 20px">
-                        <img id="cover-image" src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon663.jpg"></img>
+                    <div id="summoner-icon">
+                        <h:graphicImage styleClass="summoner-icon" value="./resources/images/bundle/4.12.2/img/profileicon/#{data.summonerDto.profileIconId}.png"/>
+                        <!--                        <img id="cover-image" src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon663.jpg"></img>-->
                     </div>
-                    <div style="height: 64px; margin-left: 70px;">
+                    <div style="height: 64px; margin-left: 100px;">
                         <div id="summoner-titlebar-summoner-name">
                             <h:outputText value="#{data.summonerDto.name}"/>
                         </div>
                         <div id="summoner-titlebar-summoner-meta">
                             <h:outputText value="Level #{data.summonerDto.summonerLevel}"/>
-
                         </div>
                     </div>
                 </div>
-                <h:form>
-                    <p:panelGrid columns="2"> 
-                        <p:panelGrid columns="2" styleClass="back">
-                            <p:button  value="Profile" styleClass="back">
+               <h:form>
+                    <p:panelGrid columns="4" id="parent"> 
+                        <p:panelGrid columns="2">
+                            <p:commandButton  value="Profile" update="parent" action="#{panelUpdate.stat_display()}">
+
+                            </p:commandButton>
+                            <p:button  value="Matchs" onclick="toggle()">
 
                             </p:button>
-                            <p:button  value="Matchs" styleClass="back">
+                            <p:commandButton  value="Masteries" update="parent" action="#{panelUpdate.mastery_display()}" >
 
-                            </p:button>
-                            <p:button  value="Masteries" styleClass="back">
+                            </p:commandButton>
+                            <p:commandButton  value="Runes" update="parent" action="#{panelUpdate.rune_display()}">
 
-                            </p:button>
-                            <p:button  value="Runes" styleClass="back">
-
-                            </p:button>
+                            </p:commandButton>
                             <p:button  value="t4" styleClass="back">
 
                             </p:button>
                         </p:panelGrid>
-                        <p:panelGrid>
+                        <p:panelGrid id="center" rendered="#{panelUpdate.render_stat}">
                             <f:facet name="header">
                                 <p:row>
                                     <p:column colspan="2"></p:column>
@@ -113,6 +113,14 @@
                                     <h:outputText value="#{data.statistic.turret_destroyed}" id="Turret_destroyed"/>
                                 </p:column>
                             </p:row>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="2"  rendered="#{panelUpdate.render_mastery}">
+                            <h:graphicImage value="./resources/images/bundle/img/mastery/masteryback.png"/>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="2"  rendered="#{panelUpdate.render_rune}">
+                            <h:outputText value="rune" />
                         </p:panelGrid>
                     </p:panelGrid>
                 </h:form>

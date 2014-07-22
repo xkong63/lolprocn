@@ -4,21 +4,21 @@
  * and open the template in the editor.
  */
 function win_size() {
-    win_width = $(window).width();
+    win_width = $(window).width()-10;
     win_height = $(window).height();
 
 }
 
 function frame_resize(){
    win_size()
-    width = win_width * 0.8
+    width = win_width * 0.5
     height = win_height * 0.3
  
 }
 
 $('#banner').ready(function banner_resize() {
     win_size()
-    $('#banner').css('width', win_width);
+    $('#banner').css('width', win_width-50);
     $('#banner').css('height',200);
 }
 )
@@ -39,7 +39,9 @@ $('#youtube_com').ready(function google_size() {
 $(window).ready(function layout(){
     win_size();
     right_width=win_width*0.15;
+    content_width=win_width*0.85-45;
     $('#right').css('width',right_width);
+    $('#content').css('width',content_width);
 })
 
 $('#searchBar').ready(function searchBar_size(){
@@ -47,4 +49,8 @@ $('#searchBar').ready(function searchBar_size(){
         $('#searchBar').css('width', win_width*0.5);
         $('#searchBar').css('margin-left',win_width*0.25);
 })
+
+function toggle(){
+    $('#right').css('rendered',true);
+}
         
