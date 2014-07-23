@@ -87,7 +87,9 @@ public class BeanInterface implements Serializable {
     public String profileRedirect() {
 
         try {
-            System.out.println(summoner+" is!");
+            /*
+            summoner details:such as name,level,normal rank status
+            */
             summonerDto = parser.populateSummonerDto(summoner);
             summonerSummarylist = parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
             System.out.println(summonerDto.getId());
@@ -107,6 +109,10 @@ public class BeanInterface implements Serializable {
                 }
             }
 
+            /*
+            summoner mastery info
+            */
+            parser.getSummonerMasterPages(summonerDto.getId());
             return "profile?faces-redirect=true";
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
