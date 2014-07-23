@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-               <h:form>
+                <h:form>
                     <p:panelGrid columns="4" id="parent"> 
                         <p:panelGrid columns="2">
                             <p:commandButton  value="Profile" update="parent" action="#{panelUpdate.stat_display()}">
@@ -114,11 +114,126 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
-                        
-                        <p:panelGrid columns="2"  rendered="#{panelUpdate.render_mastery}">
-                            <h:graphicImage value="./resources/images/bundle/img/mastery/masteryback.png"/>
-                        </p:panelGrid>
-                        
+
+                        <h:panelGrid columns='3' rendered="#{panelUpdate.render_mastery}" styleClass="back_ground" >
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4111.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4112.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4113.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4114.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4211.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4212.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4213.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4214.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4311.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4312.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4313.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4314.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4121.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4122.png' style='height:35px;width:35px'/>
+                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4124.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4221.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4222.png' style='height:35px;width:35px'/>
+                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'  />
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4224.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4322.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4323.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4324.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4131.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4132.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4133.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4134.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4231.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4232.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4233.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4234.png' style='height:35px;width:35px'/>
+                            </h:panelGrid> 
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4331.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4332.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4333.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4334.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4141.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4142.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4143.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4144.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>                           
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4241.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4242.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4243.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4244.png' style='height:35px;width:35px'/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4341.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4342.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4343.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4344.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>   
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4151.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4152.png' style='height:35px;width:35px'/>
+                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4154.png' style='height:35px;width:35px'/>
+                            </h:panelGrid>  
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4251.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4252.png' style='height:35px;width:35px'/>
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4254.png' style='height:35px;width:35px'/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="4">
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4352.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4353.png' style='height:35px;width:35px'/>
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                            </h:panelGrid> 
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4162.png' style='height:35px;width:35px' />
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                            </h:panelGrid>  
+
+                            <h:panelGrid columns="4">
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4262.png' style='height:35px;width:35px' />
+                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="4">
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4361.png' style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4362.png' style='height:35px;width:35px'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4363.png' style='height:35px;width:35px;opacity: 0'/>
+                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4364.png' style='height:35px;width:35px;opacity: 0'/>
+                            </h:panelGrid> 
+                        </h:panelGrid>                   
                         <p:panelGrid columns="2"  rendered="#{panelUpdate.render_rune}">
                             <h:outputText value="rune" />
                         </p:panelGrid>
