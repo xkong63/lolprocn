@@ -6,6 +6,7 @@
 
 package com.lolprocn.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,8 +14,24 @@ import java.util.Set;
  * @author alan
  */
 public class RunePagesDto {
-    Set<RunePageDto> pages;
+    Set<RunePageDto> pages = new HashSet<>();
     long summonerId;
+
+    public Set<RunePageDto> getPages() {
+        return pages;
+    }
+
+    public void setPages(Set<RunePageDto> pages) {
+        this.pages = pages;
+    }
+
+    public long getSummonerId() {
+        return summonerId;
+    }
+
+    public void setSummonerId(long summonerId) {
+        this.summonerId = summonerId;
+    }
     
     
 }
