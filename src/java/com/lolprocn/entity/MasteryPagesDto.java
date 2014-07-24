@@ -16,4 +16,22 @@ public class MasteryPagesDto {
     
     Set<MasteryPageDto> pages;
     long summonerId;
+
+    public Set<MasteryPageDto> getPages() {
+        return pages;
+    }
+
+    public void setPages(Set<MasteryPageDto> pages) {
+        this.pages = pages;
+    }
+
+    public long getSummonerId() {
+        return summonerId;
+    }
+
+    public void setSummonerId(long summonerId) {
+        this.summonerId = summonerId;
+    }
+    
+    
 }

@@ -10,12 +10,17 @@ import com.lolprocn.connection.Connection;
 import com.lolprocn.entity.AggregatedStatsDto;
 import com.lolprocn.entity.ChampionDto;
 import com.lolprocn.entity.ChampionListDto;
+import com.lolprocn.entity.MasteryDto;
+import com.lolprocn.entity.MasteryPageDto;
+import com.lolprocn.entity.MasteryPagesDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
 import com.lolprocn.entity.SummonerDto;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
@@ -154,4 +159,48 @@ public class JSONParser {
         
         return aggregatedStatsDto;
     }
+    
+        public MasteryPagesDto getSummonerMasterPages(long summonerId) throws IOException, JSONException{
+        MasteryPagesDto masterPagesDto=new MasteryPagesDto();
+       String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/"+summonerId+"/masteries?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
+        JSONObject jObject  = new JSONObject(response);
+        JSONObject summoner=jObject.getJSONObject(Long.toString(summonerId));
+        
+        Set<MasteryPageDto> set = new HashSet<>();
+        JSONArray pages=summoner.getJSONArray("pages");
+        for(int i=0;i<pages.length();i++){
+            JSONObject jSONObject=pages.getJSONObject(i);
+        
+            set.add(populateMasteryPageDto(jSONObject));
+            
+        }
+        masterPagesDto.setPages(set);
+        masterPagesDto.setSummonerId(summoner.getInt("summonerId"));
+        return masterPagesDto;
+
+    }
+    
+       public MasteryPageDto populateMasteryPageDto(JSONObject jObject) throws JSONException{
+        MasteryPageDto masteryPageDto=new MasteryPageDto();
+        masteryPageDto.setId(jObject.getLong("id"));
+        masteryPageDto.setCurrent(jObject.getBoolean("current"));
+        masteryPageDto.setName(jObject.getString("name"));
+        
+        List<MasteryDto> list = new ArrayList<>();
+        JSONArray jSONArray = jObject.getJSONArray("masteries");
+           for (int i=0; i<jSONArray.length(); i++) {
+               list.add(populateMasteryDto(jSONArray.getJSONObject(i)));
+           }
+        masteryPageDto.setMasteries(list);
+        return masteryPageDto;
+    }
+       
+       public MasteryDto populateMasteryDto(JSONObject jObject) throws JSONException{
+           MasteryDto masteryDto = new MasteryDto();
+           masteryDto.setId(jObject.getInt("id"));
+           masteryDto.setRank(jObject.getInt("rank"));
+           return masteryDto;
+       }
+       
+       
 }
