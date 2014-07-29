@@ -252,7 +252,7 @@ public class JSONParser {
         RunePagesDto runePagesDto = new RunePagesDto();
         
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/" + summonerId + "/runes?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
-        JSONObject jObject = (new JSONObject(response)).getJSONObject("summonerId");
+        JSONObject jObject = (new JSONObject(response)).getJSONObject(Long.toString(summonerId));
         
         JSONArray jSONArray = jObject.getJSONArray("pages");
         for (int i = 0; i < jSONArray.length(); i++) {

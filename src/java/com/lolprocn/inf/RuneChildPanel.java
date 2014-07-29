@@ -21,7 +21,7 @@ public class RuneChildPanel implements Serializable {
     /**
      * Creates a new instance of RuneChildPanel
      */
-    private String pageName="test";
+    private String pageName;
     private final String PATH="./resources/images/bundle/4.12.2/img/rune/";
     private String[] runeVal;
     public RuneChildPanel() {

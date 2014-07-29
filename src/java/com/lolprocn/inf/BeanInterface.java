@@ -11,11 +11,14 @@ import com.lolprocn.entity.MasteryPageDto;
 import com.lolprocn.entity.MasteryPagesDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
+import com.lolprocn.entity.RunePageDto;
+import com.lolprocn.entity.RunePagesDto;
 import com.lolprocn.entity.SummonerDto;
 import com.lolprocn.utils.JSONParser;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -109,14 +112,23 @@ public class BeanInterface implements Serializable {
 
     public String profileRedirect() {
 
-        try {
-            /*
-             summoner details:such as name,level,normal rank status
-             */
-            summonerDto = parser.populateSummonerDto(summoner);
+        try {          
+            statistic_display();
+            mastery_display();
+            rune_display();
+            return "profile?faces-redirect=true";
+        } catch (JSONException ex) {
+            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "index";
+    }
+
+    private void statistic_display() throws JSONException, IOException{
+        summonerDto = parser.populateSummonerDto(summoner);
             PlayerStatsSummaryListDto summonerSummarylist;
             summonerSummarylist = parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
-            System.out.println(summonerDto.getId());
             this.statistic = new Statistics();
             Iterator itr_player;
             List<PlayerStatsSummaryDto> playerStatsSummaryDto = summonerSummarylist.getPlayerStatsSummaryDto();
@@ -131,53 +143,41 @@ public class BeanInterface implements Serializable {
                 if (e.getPlayerStatSummaryType().equals("RankedSolo5x5")) {
                     statistic.setRank5_5(e);
                 }
-            }
-
-            /*
-             summoner mastery info
-             */
+            }   
+    }
+    private void mastery_display() throws IOException, JSONException {
+    
             MasteryPagesDto summoner_masterPagesDto;
             summoner_masterPagesDto = parser.getSummonerMasterPages(summonerDto.getId());
-            mastery_display(summoner_masterPagesDto);
-            rune_display();
-            return "profile?faces-redirect=true";
-        } catch (JSONException ex) {
-            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "index";
-    }
-
-    private void mastery_display(MasteryPagesDto summoner_masterPagesDto) {
-
-         List<MasteryChildPanel> masteryChildPanelGroup=new ArrayList<MasteryChildPanel>();
-        Set<MasteryPageDto> pages = summoner_masterPagesDto.getPages();
-        masteryParentPanel =new MasteryParentPanel();
-        Iterator pages_itr = pages.iterator();
-        for (; pages_itr.hasNext();) {
-            MasteryChildPanel masteryChildPanel = new MasteryChildPanel();
-            MasteryPageDto page = (MasteryPageDto) pages_itr.next();
-                    
-            List<MasteryDto> masteries = page.getMasteries();
-            Iterator mastery_itr = masteries.listIterator();
-            
-           masteryChildPanel.setPageName(page.getName());
-            int[][] masteryId = new int[30][2];
-            System.out.println("page:"+page.getName());
-            for (int i = 0; mastery_itr.hasNext(); i++) {
-                MasteryDto masteryDto = (MasteryDto) mastery_itr.next();
-                masteryId[i][0] = masteryDto.getId();
-                masteryId[i][1] = masteryDto.getRank();
+            List<MasteryChildPanel> masteryChildPanelGroup=new ArrayList<MasteryChildPanel>();
+            Set<MasteryPageDto> pages = summoner_masterPagesDto.getPages();
+            masteryParentPanel =new MasteryParentPanel();
+            Iterator pages_itr = pages.iterator();
+            for (; pages_itr.hasNext();) {
+                MasteryChildPanel masteryChildPanel = new MasteryChildPanel();
+                MasteryPageDto page = (MasteryPageDto) pages_itr.next();
                 
- //               System.out.println("id:" + masteryDto.getId() + " rank:" + masteryDto.getRank());
-
+                List<MasteryDto> masteries = page.getMasteries();
+                Iterator mastery_itr = masteries.listIterator();
+                
+                masteryChildPanel.setPageName(page.getName());
+                int[][] masteryId = new int[30][2];
+                System.out.println("page:"+page.getName());
+                for (int i = 0; mastery_itr.hasNext(); i++) {
+                    MasteryDto masteryDto = (MasteryDto) mastery_itr.next();
+                    masteryId[i][0] = masteryDto.getId();
+                    masteryId[i][1] = masteryDto.getRank();
+                    
+                    //               System.out.println("id:" + masteryDto.getId() + " rank:" + masteryDto.getRank());
+                    
+                }
+                
+                masteryChildPanelValChange(masteryId, masteryChildPanel);
+                masteryChildPanelGroup.add(masteryChildPanel);
             }
-            
-            masteryChildPanelValChange(masteryId, masteryChildPanel);
-            masteryChildPanelGroup.add(masteryChildPanel);
-        }
-        masteryParentPanel.setMasteryChildPanelGroup(masteryChildPanelGroup);
+            masteryParentPanel.setMasteryChildPanelGroup(masteryChildPanelGroup);
+
+
             
     }
 
@@ -187,7 +187,7 @@ public class BeanInterface implements Serializable {
             panelNum = (masteryId[r][0] % 4000) / 100;
             panelR = ((masteryId[r][0] % 4000) % 100) / 10;
             panelC = ((masteryId[r][0] % 4000) % 100) % 10;
-            System.out.println("panelNum:"+panelNum+" R:"+panelR+" C:"+panelC);
+           // System.out.println("panelNum:"+panelNum+" R:"+panelR+" C:"+panelC);
   
             switch (panelNum) {
                 case 1:
@@ -205,11 +205,25 @@ public class BeanInterface implements Serializable {
         }
     }
     
-    private void rune_display(){
+    private void rune_display() throws IOException, JSONException{
+        
+
+         RunePagesDto runePagesDto=parser.getRunePagesDto(summonerDto.getId());
+         Set<RunePageDto> runePageSet=(HashSet<RunePageDto>)runePagesDto.getPages();
+         Iterator runePageItr=runePageSet.iterator();
+         List<RuneChildPanel> runeChildPanelGroup=new ArrayList<RuneChildPanel>();
+         for(;runePageItr.hasNext();){
+             RuneChildPanel runeChildPanel=new RuneChildPanel();
+             RunePageDto page=(RunePageDto) runePageItr.next();
+             runeChildPanel.setPageName(page.getName());
+              runeChildPanelGroup.add(runeChildPanel);
+         }
         runeParentPanel=new RuneParentPanel();
-        List<RuneChildPanel> runeChildPanelGroup=new ArrayList<RuneChildPanel>();
-        runeChildPanelGroup.add(new RuneChildPanel());
         runeParentPanel.setRuneChildPanelGroup(runeChildPanelGroup);
+        
+
+
+
     }
 
 }
