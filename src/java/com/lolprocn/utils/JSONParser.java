@@ -15,13 +15,22 @@ import com.lolprocn.entity.MasteryPageDto;
 import com.lolprocn.entity.MasteryPagesDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
+import com.lolprocn.entity.RunePageDto;
+import com.lolprocn.entity.RunePagesDto;
+import com.lolprocn.entity.RuneSlotDto;
 import com.lolprocn.entity.SummonerDto;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.Iterator;
+
+
 import java.util.List;
+
 import java.util.ListIterator;
+import java.util.Set;
+
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
@@ -31,12 +40,16 @@ import org.primefaces.json.JSONObject;
  * @author xkong63
  */
 public class JSONParser {
+
     public SummonerDto populateSummonerDto(String name) throws JSONException, IOException{
+
+
         SummonerDto summonerDto = new SummonerDto();
         
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/"+name+"?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
         JSONObject jObject0  = new JSONObject(response);
        
+
         JSONObject jObject = jObject0.getJSONObject(name.toLowerCase());
         summonerDto.setId(jObject.getLong("id"));
         summonerDto.setName(jObject.getString("name"));
@@ -46,16 +59,18 @@ public class JSONParser {
         
     }
     
+
     public PlayerStatsSummaryListDto populatePlayerStatsSummaryListDto(long summonerId) throws IOException, JSONException{
+
         
         PlayerStatsSummaryListDto playerStatsSummaryListDto = new PlayerStatsSummaryListDto();
-        String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+summonerId+"/summary?season=SEASON4&api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
-        JSONObject jObject  = new JSONObject(response);
+        String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + summonerId + "/summary?season=SEASON4&api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
+        JSONObject jObject = new JSONObject(response);
         
         List<PlayerStatsSummaryDto> playerStatsSummaryDtoList = new ArrayList<>();
         
         JSONArray jSONArray = jObject.getJSONArray("playerStatSummaries");
-        for(int i=0; i<jSONArray.length(); i++){
+        for (int i = 0; i < jSONArray.length(); i++) {
             JSONObject jSONObject = jSONArray.getJSONObject(i);
             PlayerStatsSummaryDto dto = populatePlayerStatsSummaryDto(jSONObject);
             
@@ -67,9 +82,10 @@ public class JSONParser {
         return playerStatsSummaryListDto;
     }
     
-    public PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
-        PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
 
+    public PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
+
+        PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
         //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
 
@@ -78,21 +94,23 @@ public class JSONParser {
         AggregatedStatsDto aggregatedStatsDto = populateAggregatedStatsDto(jSONObject.getJSONObject("aggregatedStats"));
         playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
 
-        playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
 
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));
         
         return playerStatsSummaryDto;
     }
     
+
     public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException{
+
+
         ChampionListDto championListDto = new ChampionListDto();
-              
+        
         String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.2/champion?freeToPlay=true&api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
-        JSONObject jObject  = new JSONObject(response);
+        JSONObject jObject = new JSONObject(response);
         
         JSONArray jSONArray = jObject.getJSONArray("champions");
-        for(int i=0; i<jSONArray.length(); i++){
+        for (int i = 0; i < jSONArray.length(); i++) {
             JSONObject jSONObject = jSONArray.getJSONObject(i);
             
             championListDto.getChampions().add(populateChampionDto(jSONObject));
@@ -100,7 +118,11 @@ public class JSONParser {
         return championListDto;
     }
     
+
     public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException{
+
+    
+
         ChampionDto championDto = new ChampionDto();
         
         championDto.setActive(jObject.getBoolean("active"));
@@ -111,6 +133,7 @@ public class JSONParser {
         championDto.setRankedPlayEnabled(jObject.getBoolean("rankedPlayEnabled"));
         return championDto;
     }
+
  
     public MasteryPagesDto getSummonerMasterPages(long summonerId) throws IOException, JSONException{
         MasteryPagesDto masterPagesDto=new MasteryPagesDto();
@@ -222,4 +245,50 @@ public class JSONParser {
         
         return aggregatedStatsDto;
     }
+
+    
+    
+    public RunePagesDto getRunePagesDto(long summonerId) throws IOException, JSONException {
+        RunePagesDto runePagesDto = new RunePagesDto();
+        
+        String response = Connection.sendGet("https://na.api.pvp.net/api/lol/na/v1.4/summoner/" + summonerId + "/runes?api_key=018a4d88-bbb4-4578-aec5-8b3bf049bb12");
+        JSONObject jObject = (new JSONObject(response)).getJSONObject("summonerId");
+        
+        JSONArray jSONArray = jObject.getJSONArray("pages");
+        for (int i = 0; i < jSONArray.length(); i++) {
+            JSONObject jSONObject = jSONArray.getJSONObject(i);
+            
+            runePagesDto.getPages().add(populateRunePageDto(jSONObject));
+        }
+        
+        runePagesDto.setSummonerId(jObject.getLong("summonerId"));
+        
+        return runePagesDto;
+    }
+    
+    public RunePageDto populateRunePageDto(JSONObject jObject) throws JSONException {
+        RunePageDto runePageDto = new RunePageDto();
+        
+        runePageDto.setCurrent(jObject.getBoolean("current"));
+        runePageDto.setId(jObject.getLong("id"));
+        runePageDto.setName(jObject.getString("name"));
+        
+        JSONArray jSONArray = jObject.getJSONArray("slots");
+        for (int i = 0; i < jSONArray.length(); i++) {
+            JSONObject jSONObject = jSONArray.getJSONObject(i);
+            runePageDto.getSlots().add(populateRuneSlotDto(jSONObject));
+        }
+        
+        return runePageDto;
+    }
+    
+    public RuneSlotDto populateRuneSlotDto(JSONObject jObject) throws JSONException {
+        RuneSlotDto runeSlotDto = new RuneSlotDto();
+        
+        runeSlotDto.setRuneId(jObject.getInt("runeId"));
+        runeSlotDto.setRuneSlotId(jObject.getInt("runeSlotId"));
+        
+        return runeSlotDto;
+    }
+    
 }

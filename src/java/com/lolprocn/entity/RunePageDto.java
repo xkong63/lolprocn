@@ -6,6 +6,7 @@
 
 package com.lolprocn.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,7 +17,7 @@ public class RunePageDto {
     boolean current;
     long id;
     String name;
-    Set<RuneSlotDto> set;
+    Set<RuneSlotDto> slots = new HashSet<>();
 
     public boolean isCurrent() {
         return current;
@@ -42,12 +43,14 @@ public class RunePageDto {
         this.name = name;
     }
 
-    public Set<RuneSlotDto> getSet() {
-        return set;
+    public Set<RuneSlotDto> getSlots() {
+        return slots;
     }
 
-    public void setSet(Set<RuneSlotDto> set) {
-        this.set = set;
+    public void setSlots(Set<RuneSlotDto> slots) {
+        this.slots = slots;
     }
+
+
     
 }

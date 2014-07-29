@@ -32,6 +32,8 @@ public class MasteryPagesDto {
 
     public void setSummonerId(long summonerId) {
         this.summonerId = summonerId;
+
     } 
+
     
 }
