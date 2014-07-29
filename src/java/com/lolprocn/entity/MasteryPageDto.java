@@ -41,6 +41,15 @@ public class MasteryPageDto {
     public void setMasteries(List<MasteryDto> masteries) {
         this.masteries = masteries;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     
     
 }

@@ -6,19 +6,25 @@
 package com.lolprocn.inf;
 
 import com.lolprocn.entity.ChampionListDto;
+import com.lolprocn.entity.MasteryDto;
+import com.lolprocn.entity.MasteryPageDto;
+import com.lolprocn.entity.MasteryPagesDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
 import com.lolprocn.entity.PlayerStatsSummaryListDto;
 import com.lolprocn.entity.SummonerDto;
 import com.lolprocn.utils.JSONParser;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.swing.text.html.HTMLDocument;
 import org.primefaces.json.JSONException;
 
 /**
@@ -26,7 +32,6 @@ import org.primefaces.json.JSONException;
  * @author Apollowc
  */
 @ManagedBean(name = "data")
-//@RequestScoped
 @SessionScoped
 public class BeanInterface implements Serializable {
 
@@ -34,12 +39,12 @@ public class BeanInterface implements Serializable {
      * Creates a new instance of SummonerPopulate
      */
     private String summoner;
-    private SummonerDto summonerDto;
-    private PlayerStatsSummaryListDto summonerSummarylist;
+    private SummonerDto summonerDto; 
     private Statistics statistic;
     private JSONParser parser;
     private ChampionListDto freeToPlayChampionList;
-
+    private MasteryParentPanel masteryParentPanel;
+    private RuneParentPanel runeParentPanel;
     public BeanInterface() {
         try {
             parser = new JSONParser();
@@ -51,6 +56,23 @@ public class BeanInterface implements Serializable {
         }
 
     }
+
+    public RuneParentPanel getRuneParentPanel() {
+        return runeParentPanel;
+    }
+
+    public void setRuneParentPanel(RuneParentPanel runeParentPanel) {
+        this.runeParentPanel = runeParentPanel;
+    }
+
+    public MasteryParentPanel getMasteryParentPanel() {
+        return masteryParentPanel;
+    }
+
+    public void setMasteryParentPanel(MasteryParentPanel masteryParentPanel) {
+        this.masteryParentPanel = masteryParentPanel;
+    }
+
 
     public ChampionListDto getFreeToPlayChampionList() {
         return freeToPlayChampionList;
@@ -84,13 +106,15 @@ public class BeanInterface implements Serializable {
         this.statistic = statistic;
     }
 
+
     public String profileRedirect() {
 
         try {
             /*
-            summoner details:such as name,level,normal rank status
-            */
+             summoner details:such as name,level,normal rank status
+             */
             summonerDto = parser.populateSummonerDto(summoner);
+            PlayerStatsSummaryListDto summonerSummarylist;
             summonerSummarylist = parser.populatePlayerStatsSummaryListDto(summonerDto.getId());
             System.out.println(summonerDto.getId());
             this.statistic = new Statistics();
@@ -110,9 +134,12 @@ public class BeanInterface implements Serializable {
             }
 
             /*
-            summoner mastery info
-            */
-            parser.getSummonerMasterPages(summonerDto.getId());
+             summoner mastery info
+             */
+            MasteryPagesDto summoner_masterPagesDto;
+            summoner_masterPagesDto = parser.getSummonerMasterPages(summonerDto.getId());
+            mastery_display(summoner_masterPagesDto);
+            rune_display();
             return "profile?faces-redirect=true";
         } catch (JSONException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,6 +147,69 @@ public class BeanInterface implements Serializable {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "index";
+    }
+
+    private void mastery_display(MasteryPagesDto summoner_masterPagesDto) {
+
+         List<MasteryChildPanel> masteryChildPanelGroup=new ArrayList<MasteryChildPanel>();
+        Set<MasteryPageDto> pages = summoner_masterPagesDto.getPages();
+        masteryParentPanel =new MasteryParentPanel();
+        Iterator pages_itr = pages.iterator();
+        for (; pages_itr.hasNext();) {
+            MasteryChildPanel masteryChildPanel = new MasteryChildPanel();
+            MasteryPageDto page = (MasteryPageDto) pages_itr.next();
+                    
+            List<MasteryDto> masteries = page.getMasteries();
+            Iterator mastery_itr = masteries.listIterator();
+            
+           masteryChildPanel.setPageName(page.getName());
+            int[][] masteryId = new int[30][2];
+            System.out.println("page:"+page.getName());
+            for (int i = 0; mastery_itr.hasNext(); i++) {
+                MasteryDto masteryDto = (MasteryDto) mastery_itr.next();
+                masteryId[i][0] = masteryDto.getId();
+                masteryId[i][1] = masteryDto.getRank();
+                
+ //               System.out.println("id:" + masteryDto.getId() + " rank:" + masteryDto.getRank());
+
+            }
+            
+            masteryChildPanelValChange(masteryId, masteryChildPanel);
+            masteryChildPanelGroup.add(masteryChildPanel);
+        }
+        masteryParentPanel.setMasteryChildPanelGroup(masteryChildPanelGroup);
+            
+    }
+
+    private void masteryChildPanelValChange(int[][] masteryId, MasteryChildPanel masteryChildPanel) {
+        for (int r = 0; r < masteryId.length; r++) {
+            int panelNum, panelR, panelC;
+            panelNum = (masteryId[r][0] % 4000) / 100;
+            panelR = ((masteryId[r][0] % 4000) % 100) / 10;
+            panelC = ((masteryId[r][0] % 4000) % 100) % 10;
+            System.out.println("panelNum:"+panelNum+" R:"+panelR+" C:"+panelC);
+  
+            switch (panelNum) {
+                case 1:
+                    masteryChildPanel.getField1_masteryVal()[panelR-1][panelC-1] = masteryChildPanel.getPATH()  + masteryId[r][0] + ".png";
+                    break;
+                case 2:
+                    masteryChildPanel.getField2_masteryVal()[panelR-1][panelC-1] = masteryChildPanel.getPATH()  + masteryId[r][0] + ".png";
+                    break;
+                case 3:
+                    masteryChildPanel.getField3_masteryVal()[panelR-1][panelC-1] = masteryChildPanel.getPATH()  + masteryId[r][0] + ".png";
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+    
+    private void rune_display(){
+        runeParentPanel=new RuneParentPanel();
+        List<RuneChildPanel> runeChildPanelGroup=new ArrayList<RuneChildPanel>();
+        runeChildPanelGroup.add(new RuneChildPanel());
+        runeParentPanel.setRuneChildPanelGroup(runeChildPanelGroup);
     }
 
 }

@@ -10,6 +10,7 @@ import com.lolprocn.connection.Connection;
 import com.lolprocn.entity.AggregatedStatsDto;
 import com.lolprocn.entity.ChampionDto;
 import com.lolprocn.entity.ChampionListDto;
+import com.lolprocn.entity.MasteryDto;
 import com.lolprocn.entity.MasteryPageDto;
 import com.lolprocn.entity.MasteryPagesDto;
 import com.lolprocn.entity.PlayerStatsSummaryDto;
@@ -17,7 +18,10 @@ import com.lolprocn.entity.PlayerStatsSummaryListDto;
 import com.lolprocn.entity.SummonerDto;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
@@ -66,13 +70,14 @@ public class JSONParser {
     public PlayerStatsSummaryDto populatePlayerStatsSummaryDto(JSONObject jSONObject) throws JSONException{
         PlayerStatsSummaryDto playerStatsSummaryDto = new PlayerStatsSummaryDto();
 
-
         //playerStatsSummaryDto.setLosses(jSONObject.getInt("losses"));
         playerStatsSummaryDto.setPlayerStatSummaryType(jSONObject.getString("playerStatSummaryType"));
 
         
 
         AggregatedStatsDto aggregatedStatsDto = populateAggregatedStatsDto(jSONObject.getJSONObject("aggregatedStats"));
+        playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
+
         playerStatsSummaryDto.setAggregatedStatsDto(aggregatedStatsDto);
 
         playerStatsSummaryDto.setWins(jSONObject.getInt("wins"));
@@ -117,7 +122,6 @@ public class JSONParser {
         JSONArray pages=summoner.getJSONArray("pages");
         for(int i=0;i<pages.length();i++){
             JSONObject temp=pages.getJSONObject(i);
-        
             masterPagesDto.getPages().add(populateMasteryPageDto(temp));
         }
         return masterPagesDto;
@@ -128,7 +132,21 @@ public class JSONParser {
         MasteryPageDto masteryPageDto=new MasteryPageDto();
         masteryPageDto.setId(jObject.getLong("id"));
         masteryPageDto.setCurrent(jObject.getBoolean("current"));
-        masteryPageDto.setMasteries(populateMasterDto(jObject.getJSONArray("masteries")));
+        masteryPageDto.setName(jObject.getString("name"));
+        masteryPageDto.setMasteries(populateMasteryDto(jObject.getJSONArray("masteries")));
+        return masteryPageDto;
+    }
+    
+    public List<MasteryDto> populateMasteryDto(JSONArray masteries) throws JSONException{
+        List<MasteryDto> list=new ArrayList<MasteryDto>(); 
+        for(int i=0;i<masteries.length();i++){
+            JSONObject temp=masteries.getJSONObject(i);
+            MasteryDto masteryDto=new MasteryDto();
+            masteryDto.setId(temp.getInt("id"));
+            masteryDto.setRank(temp.getInt("rank"));
+            list.add(masteryDto);
+        }
+        return list;
     }
     
     

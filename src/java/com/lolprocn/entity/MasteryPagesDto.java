@@ -7,6 +7,7 @@
 package com.lolprocn.entity;
 
 import java.util.Set;
+import org.jboss.weld.util.collections.ArraySet;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 public class MasteryPagesDto {
     
-    Set<MasteryPageDto> pages;
+    Set<MasteryPageDto> pages=new ArraySet<MasteryPageDto>();
     long summonerId;
 
     public Set<MasteryPageDto> getPages() {
@@ -31,7 +32,6 @@ public class MasteryPagesDto {
 
     public void setSummonerId(long summonerId) {
         this.summonerId = summonerId;
-    }
-    
+    } 
     
 }

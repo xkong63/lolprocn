@@ -13,7 +13,7 @@
                         <h:graphicImage styleClass="summoner-icon" value="./resources/images/bundle/4.12.2/img/profileicon/#{data.summonerDto.profileIconId}.png"/>
                         <!--                        <img id="cover-image" src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon663.jpg"></img>-->
                     </div>
-                    <div style="height: 64px; margin-left: 100px;">
+                    <div style="height: 50px; margin-left: 100px;">
                         <div id="summoner-titlebar-summoner-name">
                             <h:outputText value="#{data.summonerDto.name}"/>
                         </div>
@@ -115,128 +115,187 @@
                             </p:row>
                         </p:panelGrid>
 
-                        <h:panelGrid columns='3' rendered="#{panelUpdate.render_mastery}" styleClass="back_ground" >
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4111.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4112.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4113.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4114.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4211.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4212.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4213.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4214.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4311.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4312.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4313.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4314.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
+                        <h:panelGrid rendered="#{panelUpdate.render_mastery}">
+                            <f:facet name="header">
+                                <h:outputText value="masteries"/>
+                            </f:facet>
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4121.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4122.png' style='height:35px;width:35px'/>
-                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4124.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
+                            <p:tabView value="#{data.masteryParentPanel.masteryChildPanelGroup}" var="page">
+                                <p:tab title="#{page.pageName}">
+                                    <h:panelGrid columns='3'  styleClass="masteryBackground" >
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field1_masteryVal[0][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[0][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[0][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage value='#{page.field1_masteryVal[0][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field2_masteryVal[0][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[0][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[0][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[0][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field3_masteryVal[0][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[0][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[0][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[0][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4221.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4222.png' style='height:35px;width:35px'/>
-                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'  />
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4224.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field1_masteryVal[1][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[1][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[1][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4322.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4323.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4324.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4131.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4132.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4133.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4134.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4231.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4232.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4233.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4234.png' style='height:35px;width:35px'/>
-                            </h:panelGrid> 
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field2_masteryVal[1][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[1][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'  />
+                                            <h:graphicImage  value='#{page.field2_masteryVal[1][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4331.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4332.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4333.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4334.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[1][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[1][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[1][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field1_masteryVal[2][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[2][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[2][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[2][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field2_masteryVal[2][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[2][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[2][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[2][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid> 
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4141.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4142.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4143.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4144.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>                           
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4241.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4242.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4243.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4244.png' style='height:35px;width:35px'/>
-                            </h:panelGrid> 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4341.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4342.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4343.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4344.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>   
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field3_masteryVal[2][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[2][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[2][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[2][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4151.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4152.png' style='height:35px;width:35px'/>
-                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4154.png' style='height:35px;width:35px'/>
-                            </h:panelGrid>  
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field1_masteryVal[3][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[3][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[3][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[3][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>                           
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field2_masteryVal[3][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[3][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[3][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[3][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid> 
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field3_masteryVal[3][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[3][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[3][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[3][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>   
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4251.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4252.png' style='height:35px;width:35px'/>
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4254.png' style='height:35px;width:35px'/>
-                            </h:panelGrid> 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4352.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4353.png' style='height:35px;width:35px'/>
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                            </h:panelGrid> 
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field1_masteryVal[4][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[4][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[4][3]}' style='height:35px;width:35px'/>
+                                        </h:panelGrid>  
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4162.png' style='height:35px;width:35px' />
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                            </h:panelGrid>  
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field2_masteryVal[4][0]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[4][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage value='#{page.field2_masteryVal[4][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'/>
+                                        </h:panelGrid> 
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[4][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[4][2]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                        </h:panelGrid> 
 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4262.png' style='height:35px;width:35px' />
-                                <h:graphicImage style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
-                            </h:panelGrid> 
-                            <h:panelGrid columns="4">
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4361.png' style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4362.png' style='height:35px;width:35px'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4363.png' style='height:35px;width:35px;opacity: 0'/>
-                                <h:graphicImage value='./resources/images/bundle/4.12.2/img/mastery/4364.png' style='height:35px;width:35px;opacity: 0'/>
-                            </h:panelGrid> 
-                        </h:panelGrid>                   
-                        <p:panelGrid columns="2"  rendered="#{panelUpdate.render_rune}">
-                            <h:outputText value="rune" />
-                        </p:panelGrid>
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field1_masteryVal[5][1]}' style='height:35px;width:35px' />
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                        </h:panelGrid>  
+
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field2_masteryVal[5][1]}' style='height:35px;width:35px' />
+                                            <h:graphicImage  style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage   style='height:35px;width:35px;opacity: 0'/>
+                                        </h:panelGrid> 
+                                        <h:panelGrid columns="4">
+                                            <h:graphicImage  value='#{page.field3_masteryVal[5][0]}' style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[5][1]}' style='height:35px;width:35px'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[5][2]}' style='height:35px;width:35px;opacity: 0'/>
+                                            <h:graphicImage  value='#{page.field3_masteryVal[5][3]}' style='height:35px;width:35px;opacity: 0'/>
+                                        </h:panelGrid> 
+                                    </h:panelGrid>   
+                                </p:tab>
+
+                            </p:tabView>
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" rendered="#{panelUpdate.render_rune}">
+                            <f:facet name="header">
+                                <h:outputText value="Runes"/>
+                            </f:facet>
+
+                            <p:tabView value="#{data.runeParentPanel.runeChildPanelGroup}" var="page">
+                                <p:tab title="#{page.pageName}">
+                                    <h:panelGrid  columns="2" >
+                                        <h:panelGrid styleClass="runeBackground">
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:432px;left: 57px; width: 50px; height: 50px;"/>  
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:432px;left: 119px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:432px;left: 183px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:78px;left: 357px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:205px;left: 597px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:111px;left: 621px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:148px;left: 571px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:164px;left: 510px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:86px;left: 473px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:109px;left: 527px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:136px;left: 453px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:369px;left: 45px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:369px;left: 106px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:276px;left: 121px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:229px;left: 78px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:375px;left: 175px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:300px;left: 230px; width: 80px; height: 80px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:126px;left: 352px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:78px;left: 412px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:85px;left: 269px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:116px;left: 210px; width: 50px; height: 50px;"/>                                           
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:143px;left: 164px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:182px;left: 113px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:311px;left: 76px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:321px;left: 157px; width: 50px; height: 50px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:240px;left: 455px; width: 80px; height: 80px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:104px;left: 78px; width: 80px; height: 80px;"/>
+                                            <h:graphicImage value="#{page.runeVal[0]}" style="position: absolute; top:230px;left: 158px; width: 50px; height: 50px;"/>
+                                        </h:panelGrid>
+
+                                        <h:panelGrid>
+                                            <f:facet name="header">
+                                                <h:outputText value="Statics"/>
+                                            </f:facet>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </p:tab>
+
+                            </p:tabView>
+
+                        </h:panelGrid>
                     </p:panelGrid>
                 </h:form>
             </ui:define>

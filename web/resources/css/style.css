@@ -81,13 +81,25 @@ width: 60px;}
        // display: none;
 }
 
-.back_ground{
+.masteryBackground{
     background-image:  url('../images/bundle/img/mastery/masteryback.png');
     width:827px;
     height:479px;
     
 }
 
-.back_ground tr td{
+.masteryBackground tr td{
+    border:0px !important;
+}
+
+
+.runeBackground{
+    background-image:  url('../images/bundle/img/runebook/runeBack.png');
+    width:656px;
+    height:436px;
+    
+}
+
+.runeBackground tr td{
     border:0px !important;
 }
