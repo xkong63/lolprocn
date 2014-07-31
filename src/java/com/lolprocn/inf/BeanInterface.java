@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.swing.text.html.HTMLDocument;
+import org.json.simple.parser.ParseException;
 import org.primefaces.json.JSONException;
 
 /**
@@ -55,6 +56,8 @@ public class BeanInterface implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
+            Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(BeanInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -109,7 +112,7 @@ public class BeanInterface implements Serializable {
         this.statistic = statistic;
     }
 
-
+    
     public String profileRedirect() {
 
         try {          

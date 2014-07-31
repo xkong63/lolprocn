@@ -47,15 +47,14 @@
 
                     <p:tabView>
                         <p:tab title="Champion Rotation">
-                            <h:panelGrid columns="2" cellpadding="10">
+                            <h:panelGrid>
                                 <p:dataList value="#{data.freeToPlayChampionList.champions}" var="champion" >
-<!--                                    <f:facet name="header">
-                                        Weekly free champion
-                                    </f:facet>-->
-                                    <p:graphicImage name="./images/bundle/4.12.2/img/champion/Aatrox.png" style='width:60px;height:60px'/>
-                                    <h:outputText
-                                        value="#{champion.id}" />
-                                    
+                                    <p:graphicImage name="./images/bundle/4.12.2/img/champion/#{champion.name}.png" style='width:60px;height:60px'/>
+
+                                    <p:outputLabel value="#{champion.name}"/>
+
+
+
                                 </p:dataList>
                             </h:panelGrid>
                         </p:tab>

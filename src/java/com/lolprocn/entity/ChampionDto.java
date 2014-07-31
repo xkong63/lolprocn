@@ -15,6 +15,7 @@ public class ChampionDto {
     boolean botEnabled;
     boolean botMmEnabled;
     boolean freeToPlay;
+    String name;
     long id;
     boolean rankedPlayEnabled;
 
@@ -65,5 +66,15 @@ public class ChampionDto {
     public void setRankedPlayEnabled(boolean rankedPlayEnabled) {
         this.rankedPlayEnabled = rankedPlayEnabled;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
     
 }

@@ -19,17 +19,17 @@ import com.lolprocn.entity.RunePageDto;
 import com.lolprocn.entity.RunePagesDto;
 import com.lolprocn.entity.RuneSlotDto;
 import com.lolprocn.entity.SummonerDto;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-
 import java.util.List;
-
 import java.util.ListIterator;
 import java.util.Set;
+import org.json.simple.parser.ParseException;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
@@ -101,7 +101,7 @@ public class JSONParser {
     }
     
 
-    public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException{
+    public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException, ParseException{
 
 
         ChampionListDto championListDto = new ChampionListDto();
@@ -119,7 +119,7 @@ public class JSONParser {
     }
     
 
-    public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException{
+    public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException, IOException, ParseException{
 
     
 
@@ -131,9 +131,19 @@ public class JSONParser {
         championDto.setFreeToPlay(jObject.getBoolean("freeToPlay"));
         championDto.setId(jObject.getLong("id"));
         championDto.setRankedPlayEnabled(jObject.getBoolean("rankedPlayEnabled"));
+        championDto.setName(convertFromIdToName(jObject.getLong("id")));
         return championDto;
     }
 
+    public String convertFromIdToName(Long id) throws IOException, ParseException, JSONException{
+        org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+        
+        Object obj=parser.parse(new FileReader("/Users/Apollowc/NetBeansProjects/LolProCn/web/resources/json/champion.json"));
+        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) obj;
+        org.json.simple.JSONObject keys=(org.json.simple.JSONObject) jsonObject.get("keys");
+        return (String)keys.get(Long.toString(id));
+
+    }
  
     public MasteryPagesDto getSummonerMasterPages(long summonerId) throws IOException, JSONException{
         MasteryPagesDto masterPagesDto=new MasteryPagesDto();
