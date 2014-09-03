@@ -6,7 +6,7 @@
 function win_size() {
     win_width = $(window).width()-10;
     win_height = $(window).height();
-
+    //alert(win_width);
 }
 
 function frame_resize(){
@@ -16,41 +16,32 @@ function frame_resize(){
  
 }
 
-$('#banner').ready(function banner_resize() {
-    win_size()
-    $('#banner').css('width', win_width-50);
-    $('#banner').css('height',200);
-}
-)
-$('#twitch_com').ready(function twitch_size() {
+
+$('#twitch_com','#youtube.com').ready(function() {
     frame_resize();
-        $('#twitch_com').css('width', width);
-    $('#twitch_com').css('height', height);
+        $(this).css('width', width).css('height',height);
 }
 )
 
-$('#youtube_com').ready(function google_size() {
-   frame_resize()
-    $('#youtube_com').css('width', width);
-    $('#youtube_com').css('height', height);
-}
-)
-
-$(window).ready(function layout(){
+$(document).ready(function(){
     win_size();
     right_width=win_width*0.15;
     content_width=win_width*0.85-45;
     $('#right').css('width',right_width);
     $('#content').css('width',content_width);
-})
-
-$('#searchBar').ready(function searchBar_size(){
-    win_size();
-        $('#searchBar').css('width', win_width*0.5);
-        $('#searchBar').css('margin-left',win_width*0.25);
-})
-
-function toggle(){
-    $('#right').css('rendered',true);
+    right_height=$('#right').height();
+    content_height=$('#content').height();
+    if(right_height>content_height){
+     $('#bottom').css('top',right_height-content_height)
+ };
+ $('#banner').attr('width', win_width-50);
 }
+)
+
+ $('.searchBar').load(function(){
+    win_size();
+        $(this).css('width', win_width*0.5);
+        $(this).css('margin-left',win_width*0.25);
+})
+
         

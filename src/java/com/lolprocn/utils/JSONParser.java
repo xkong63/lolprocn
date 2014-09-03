@@ -19,8 +19,15 @@ import com.lolprocn.entity.RunePageDto;
 import com.lolprocn.entity.RunePagesDto;
 import com.lolprocn.entity.RuneSlotDto;
 import com.lolprocn.entity.SummonerDto;
+import com.lolprocn.entity.rankMatch.MatchSummary;
+import com.lolprocn.entity.rankMatch.Participant;
+import com.lolprocn.entity.rankMatch.ParticipantIdentity;
+import com.lolprocn.entity.rankMatch.ParticipantStats;
+import com.lolprocn.entity.rankMatch.Player;
+import com.lolprocn.entity.rankMatch.PlayerHistory;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -29,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
-import org.json.simple.parser.ParseException;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
@@ -41,6 +47,97 @@ import org.primefaces.json.JSONObject;
  */
 public class JSONParser {
 
+    public PlayerHistory getPlayerHistory(long summonerId) throws IOException, JSONException{
+        PlayerHistory playerHistory=new PlayerHistory();
+        List<MatchSummary> matchList=new ArrayList<MatchSummary>();
+        String response=Connection.sendGet("https://na.api.pvp.net/api/lol/na/v2.2/matchhistory/"+summonerId+"?api_key=81a9f77d-eb19-4581-a58e-afc46b10ed0b");
+        JSONObject jObject0  = new JSONObject(response);
+        JSONArray matches=jObject0.getJSONArray("matches");
+        
+        for(int i=0;i<matches.length();i++){
+            JSONObject match=matches.getJSONObject(i);
+            matchList.add(populateMatchSummary(match));
+        }
+        playerHistory.setMatches(matchList);
+        return playerHistory;
+    }
+    
+    public MatchSummary populateMatchSummary(JSONObject match) throws JSONException{
+        MatchSummary matchSummary=new MatchSummary();
+        matchSummary.setMapId(match.getInt("mapId"));
+        matchSummary.setMatchCreation(BigInteger.valueOf(match.getLong("matchCreation")));
+        
+        matchSummary.setMatchDuration(BigInteger.valueOf(match.getLong("matchDuration")));
+        matchSummary.setMatchId(match.getLong("matchId"));
+        matchSummary.setMatchVersion(match.getString("matchVersion"));
+        matchSummary.setQueueType(match.getString("queueType"));
+        matchSummary.setRegion(match.getString("region"));
+        matchSummary.setSeason(match.getString("season"));
+        
+        JSONArray participantIdentities=match.getJSONArray("participantIdentities");
+        List<ParticipantIdentity> participantIdentitiesList=new ArrayList<ParticipantIdentity>();
+        for(int i=0;i<participantIdentities.length();i++){
+            participantIdentitiesList.add(populateParticipantIdentity(participantIdentities.getJSONObject(i)));
+        }
+        matchSummary.setParticipantIdentities(participantIdentitiesList);
+        
+        JSONArray participants=match.getJSONArray("participants");
+        List<Participant> participantsList=new ArrayList<Participant>();
+        for(int i=0;i<participants.length();i++){
+            participantsList.add(populateParticipant(participants.getJSONObject(i)));
+        }
+        matchSummary.setParticipants(participantsList);
+        return matchSummary;
+        
+    }
+    public Participant populateParticipant(JSONObject participant) throws JSONException{
+        Participant participant1=new Participant();
+        participant1.setChampionId(participant.getInt("championId"));
+        participant1.setParticipantId(participant.getInt("participantId"));
+        participant1.setSpell1Id(participant.getInt("spell1Id"));
+        participant1.setSpell2Id(participant.getInt("spell2Id"));
+        participant1.setTeamId(participant.getInt("teamId"));
+        
+        ParticipantStats participantStats=populateParticipantStats(participant.getJSONObject("stats"));
+        participant1.setStats(participantStats);
+        return participant1;
+    }
+    
+    public ParticipantStats populateParticipantStats(JSONObject participantStats) throws JSONException{
+        ParticipantStats stats=new ParticipantStats();
+        stats.setAssists(participantStats.getLong("assists"));
+        stats.setChampLevel(participantStats.getInt("champLevel"));
+        stats.setDeaths(participantStats.getLong("deaths"));
+        stats.setGoldEarned(participantStats.getLong("goldEarned"));
+        stats.setItem0(participantStats.getLong("item0"));
+        stats.setItem1(participantStats.getLong("item1"));
+        stats.setItem2(participantStats.getLong("item2"));
+        stats.setItem3(participantStats.getLong("item3"));
+        stats.setItem4(participantStats.getLong("item4"));
+        stats.setItem5(participantStats.getLong("item5"));
+        stats.setItem6(participantStats.getLong("item6"));
+        stats.setKillSprees(participantStats.getLong("killingSprees"));
+        stats.setKills(participantStats.getLong("kills"));
+        stats.setMinionsKilled(participantStats.getLong("minionsKilled"));
+        stats.setTotalDamageDealtToChampions(participantStats.getLong("totalDamageDealtToChampions"));
+        stats.setTotalDamageTaken(participantStats.getLong("totalDamageTaken"));
+        return stats;
+    }
+    public ParticipantIdentity populateParticipantIdentity(JSONObject participantIdentity) throws JSONException{
+        ParticipantIdentity identity=new ParticipantIdentity();
+        JSONObject jSONObject=participantIdentity.getJSONObject("player");
+        
+        
+        Player player=new Player();
+        player.setMatchHistoryUri(jSONObject.getString("matchHistoryUri"));
+        player.setProfileIcon(jSONObject.getInt("profileIcon"));
+        player.setSummonerName(jSONObject.getString("summonerName"));
+        identity.setParticipantId(participantIdentity.getInt("participantId"));
+        identity.setPlayer(player);
+        return identity;
+    }
+    
+    
     public SummonerDto populateSummonerDto(String name) throws JSONException, IOException{
 
 
@@ -101,7 +198,7 @@ public class JSONParser {
     }
     
 
-    public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException, ParseException{
+    public ChampionListDto getFreeToPlayChampionList() throws IOException, JSONException{
 
 
         ChampionListDto championListDto = new ChampionListDto();
@@ -119,9 +216,7 @@ public class JSONParser {
     }
     
 
-    public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException, IOException, ParseException{
-
-    
+    public ChampionDto populateChampionDto(JSONObject jObject) throws JSONException, IOException{
 
         ChampionDto championDto = new ChampionDto();
         
@@ -132,15 +227,17 @@ public class JSONParser {
         championDto.setId(jObject.getLong("id"));
         championDto.setRankedPlayEnabled(jObject.getBoolean("rankedPlayEnabled"));
         championDto.setName(convertFromIdToName(jObject.getLong("id")));
+        System.out.println(championDto.getName());
         return championDto;
     }
 
-    public String convertFromIdToName(Long id) throws IOException, ParseException, JSONException{
-        org.json.simple.parser.JSONParser parser = new org.json.simple.parser.JSONParser();
+    public String convertFromIdToName(Long id) throws IOException, JSONException{
         
-        Object obj=parser.parse(new FileReader("/Users/Apollowc/NetBeansProjects/LolProCn/web/resources/json/champion.json"));
-        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) obj;
-        org.json.simple.JSONObject keys=(org.json.simple.JSONObject) jsonObject.get("keys");
+        FileReader fr=new FileReader("/Users/Apollowc/NetBeansProjects/LolProCn/web/resources/json/champion.json");
+        char[] data=new char[5000000];
+        fr.read(data);
+         JSONObject jobj=new JSONObject(new String(data));
+         JSONObject keys=jobj.getJSONObject("keys");
         return (String)keys.get(Long.toString(id));
 
     }
@@ -265,6 +362,7 @@ public class JSONParser {
         JSONObject jObject = (new JSONObject(response)).getJSONObject(Long.toString(summonerId));
         
         JSONArray jSONArray = jObject.getJSONArray("pages");
+        System.out.println("getrunePagesDto:"+jSONArray.length());
         for (int i = 0; i < jSONArray.length(); i++) {
             JSONObject jSONObject = jSONArray.getJSONObject(i);
             
@@ -283,10 +381,15 @@ public class JSONParser {
         runePageDto.setId(jObject.getLong("id"));
         runePageDto.setName(jObject.getString("name"));
         
+        if(jObject.isNull("slots")==false){
+            
+        
         JSONArray jSONArray = jObject.getJSONArray("slots");
+        System.out.println("populaterunePagesDto:"+jSONArray.length());
         for (int i = 0; i < jSONArray.length(); i++) {
             JSONObject jSONObject = jSONArray.getJSONObject(i);
             runePageDto.getSlots().add(populateRuneSlotDto(jSONObject));
+        }
         }
         
         return runePageDto;

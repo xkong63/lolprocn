@@ -21,7 +21,8 @@
             <ui:insert name="top">
                 <h:graphicImage value="./resources/images/images.jpeg" height="200px" id="banner"></h:graphicImage>
                 <h:form>
-                    <p:inputText value="#{data.summoner}" styleClass="searchBar" />
+                    <h:inputText value="#{data.summoner}" styleClass="searchBar" id="keyword"/>
+                    <p:watermark value="Search by Summoner Name" for="keyword"/>
                     <p:commandButton value="Search" action="#{data.profileRedirect()}"/>
                 </h:form>
                 <h:panelGrid columns="5">
@@ -49,12 +50,9 @@
                         <p:tab title="Champion Rotation">
                             <h:panelGrid>
                                 <p:dataList value="#{data.freeToPlayChampionList.champions}" var="champion" >
-                                    <p:graphicImage name="./images/bundle/4.12.2/img/champion/#{champion.name}.png" style='width:60px;height:60px'/>
+                                    <p:graphicImage name="./images/bundle/4.15.1/img/champion/#{champion.name}.png" style='width:60px;height:60px'/>
 
                                     <p:outputLabel value="#{champion.name}"/>
-
-
-
                                 </p:dataList>
                             </h:panelGrid>
                         </p:tab>
@@ -70,7 +68,7 @@
             <ui:insert name="bottom">Copyright 2014 LOLProCn</ui:insert>
         </div>
 
-        <script type="text/javascript" src="./resources/js/jquery-1.11.1.js"/>
+        <h:outputScript name="jquery/jquery.js" library="primefaces" />
         <script type="text/javascript" src="./resources/js/script.js"/>
     </h:body>
 

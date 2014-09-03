@@ -22,10 +22,9 @@ public class RuneChildPanel implements Serializable {
      * Creates a new instance of RuneChildPanel
      */
     private String pageName;
-    private final String PATH="./resources/images/bundle/4.12.2/img/rune/";
-    private String[] runeVal;
+    private final String PATH="./resources/images/bundle/4.15.1/img/rune/";
+    private String[] runeVal=new String[30];
     public RuneChildPanel() {
-        runeVal=new String[]{PATH+"8001.png"};
     }
 
     public String getPageName() {
@@ -43,6 +42,12 @@ public class RuneChildPanel implements Serializable {
     public void setRuneVal(String[] runeVal) {
         this.runeVal = runeVal;
     }
+
+    public String getPATH() {
+        return PATH;
+    }
+    
+    
     
     
     
