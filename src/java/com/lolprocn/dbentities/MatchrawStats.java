@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MatchrawStats.findAll", query = "SELECT m FROM MatchrawStats m"),
     @NamedQuery(name = "MatchrawStats.findByGameId", query = "SELECT m FROM MatchrawStats m WHERE m.matchrawStatsPK.gameId = :gameId"),
-    @NamedQuery(name = "MatchrawStats.findBySummonerId", query = "SELECT m FROM MatchrawStats m WHERE m.matchrawStatsPK.summonerId = :summonerId"),
+    @NamedQuery(name = "MatchrawStats.findBySummonerName", query = "SELECT m FROM MatchrawStats m WHERE m.matchrawStatsPK.summonerName = :summonerName"),
     @NamedQuery(name = "MatchrawStats.findByChampionId", query = "SELECT m FROM MatchrawStats m WHERE m.championId = :championId"),
     @NamedQuery(name = "MatchrawStats.findBySpell1Id", query = "SELECT m FROM MatchrawStats m WHERE m.spell1Id = :spell1Id"),
     @NamedQuery(name = "MatchrawStats.findBySpell2Id", query = "SELECT m FROM MatchrawStats m WHERE m.spell2Id = :spell2Id"),
@@ -98,9 +98,6 @@ public class MatchrawStats implements Serializable {
     @JoinColumn(name = "gameId", referencedColumnName = "gameId", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Matches matches;
-    @JoinColumn(name = "summonerId", referencedColumnName = "summonerId", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Summoner summoner;
 
     public MatchrawStats() {
     }
@@ -109,8 +106,8 @@ public class MatchrawStats implements Serializable {
         this.matchrawStatsPK = matchrawStatsPK;
     }
 
-    public MatchrawStats(long gameId, long summonerId) {
-        this.matchrawStatsPK = new MatchrawStatsPK(gameId, summonerId);
+    public MatchrawStats(long gameId, String summonerName) {
+        this.matchrawStatsPK = new MatchrawStatsPK(gameId, summonerName);
     }
 
     public MatchrawStatsPK getMatchrawStatsPK() {
@@ -295,14 +292,6 @@ public class MatchrawStats implements Serializable {
 
     public void setMatches(Matches matches) {
         this.matches = matches;
-    }
-
-    public Summoner getSummoner() {
-        return summoner;
-    }
-
-    public void setSummoner(Summoner summoner) {
-        this.summoner = summoner;
     }
 
     @Override

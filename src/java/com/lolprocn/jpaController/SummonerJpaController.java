@@ -6,22 +6,18 @@
 
 package com.lolprocn.jpaController;
 
+import com.lolprocn.dbentities.Summoner;
+import com.lolprocn.jpaController.exceptions.NonexistentEntityException;
+import com.lolprocn.jpaController.exceptions.PreexistingEntityException;
+import com.lolprocn.jpaController.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.lolprocn.dbentities.MatchrawStats;
-import com.lolprocn.dbentities.Summoner;
-import com.lolprocn.jpaController.exceptions.IllegalOrphanException;
-import com.lolprocn.jpaController.exceptions.NonexistentEntityException;
-import com.lolprocn.jpaController.exceptions.PreexistingEntityException;
-import com.lolprocn.jpaController.exceptions.RollbackFailureException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
 /**
@@ -42,29 +38,11 @@ public class SummonerJpaController implements Serializable {
     }
 
     public void create(Summoner summoner) throws PreexistingEntityException, RollbackFailureException, Exception {
-        if (summoner.getMatchrawStatsCollection() == null) {
-            summoner.setMatchrawStatsCollection(new ArrayList<MatchrawStats>());
-        }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Collection<MatchrawStats> attachedMatchrawStatsCollection = new ArrayList<MatchrawStats>();
-            for (MatchrawStats matchrawStatsCollectionMatchrawStatsToAttach : summoner.getMatchrawStatsCollection()) {
-                matchrawStatsCollectionMatchrawStatsToAttach = em.getReference(matchrawStatsCollectionMatchrawStatsToAttach.getClass(), matchrawStatsCollectionMatchrawStatsToAttach.getMatchrawStatsPK());
-                attachedMatchrawStatsCollection.add(matchrawStatsCollectionMatchrawStatsToAttach);
-            }
-            summoner.setMatchrawStatsCollection(attachedMatchrawStatsCollection);
             em.persist(summoner);
-            for (MatchrawStats matchrawStatsCollectionMatchrawStats : summoner.getMatchrawStatsCollection()) {
-                Summoner oldSummonerOfMatchrawStatsCollectionMatchrawStats = matchrawStatsCollectionMatchrawStats.getSummoner();
-                matchrawStatsCollectionMatchrawStats.setSummoner(summoner);
-                matchrawStatsCollectionMatchrawStats = em.merge(matchrawStatsCollectionMatchrawStats);
-                if (oldSummonerOfMatchrawStatsCollectionMatchrawStats != null) {
-                    oldSummonerOfMatchrawStatsCollectionMatchrawStats.getMatchrawStatsCollection().remove(matchrawStatsCollectionMatchrawStats);
-                    oldSummonerOfMatchrawStatsCollectionMatchrawStats = em.merge(oldSummonerOfMatchrawStatsCollectionMatchrawStats);
-                }
-            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -83,45 +61,12 @@ public class SummonerJpaController implements Serializable {
         }
     }
 
-    public void edit(Summoner summoner) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Summoner summoner) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Summoner persistentSummoner = em.find(Summoner.class, summoner.getSummonerId());
-            Collection<MatchrawStats> matchrawStatsCollectionOld = persistentSummoner.getMatchrawStatsCollection();
-            Collection<MatchrawStats> matchrawStatsCollectionNew = summoner.getMatchrawStatsCollection();
-            List<String> illegalOrphanMessages = null;
-            for (MatchrawStats matchrawStatsCollectionOldMatchrawStats : matchrawStatsCollectionOld) {
-                if (!matchrawStatsCollectionNew.contains(matchrawStatsCollectionOldMatchrawStats)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain MatchrawStats " + matchrawStatsCollectionOldMatchrawStats + " since its summoner field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Collection<MatchrawStats> attachedMatchrawStatsCollectionNew = new ArrayList<MatchrawStats>();
-            for (MatchrawStats matchrawStatsCollectionNewMatchrawStatsToAttach : matchrawStatsCollectionNew) {
-                matchrawStatsCollectionNewMatchrawStatsToAttach = em.getReference(matchrawStatsCollectionNewMatchrawStatsToAttach.getClass(), matchrawStatsCollectionNewMatchrawStatsToAttach.getMatchrawStatsPK());
-                attachedMatchrawStatsCollectionNew.add(matchrawStatsCollectionNewMatchrawStatsToAttach);
-            }
-            matchrawStatsCollectionNew = attachedMatchrawStatsCollectionNew;
-            summoner.setMatchrawStatsCollection(matchrawStatsCollectionNew);
             summoner = em.merge(summoner);
-            for (MatchrawStats matchrawStatsCollectionNewMatchrawStats : matchrawStatsCollectionNew) {
-                if (!matchrawStatsCollectionOld.contains(matchrawStatsCollectionNewMatchrawStats)) {
-                    Summoner oldSummonerOfMatchrawStatsCollectionNewMatchrawStats = matchrawStatsCollectionNewMatchrawStats.getSummoner();
-                    matchrawStatsCollectionNewMatchrawStats.setSummoner(summoner);
-                    matchrawStatsCollectionNewMatchrawStats = em.merge(matchrawStatsCollectionNewMatchrawStats);
-                    if (oldSummonerOfMatchrawStatsCollectionNewMatchrawStats != null && !oldSummonerOfMatchrawStatsCollectionNewMatchrawStats.equals(summoner)) {
-                        oldSummonerOfMatchrawStatsCollectionNewMatchrawStats.getMatchrawStatsCollection().remove(matchrawStatsCollectionNewMatchrawStats);
-                        oldSummonerOfMatchrawStatsCollectionNewMatchrawStats = em.merge(oldSummonerOfMatchrawStatsCollectionNewMatchrawStats);
-                    }
-                }
-            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -144,7 +89,7 @@ public class SummonerJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -155,17 +100,6 @@ public class SummonerJpaController implements Serializable {
                 summoner.getSummonerId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The summoner with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            Collection<MatchrawStats> matchrawStatsCollectionOrphanCheck = summoner.getMatchrawStatsCollection();
-            for (MatchrawStats matchrawStatsCollectionOrphanCheckMatchrawStats : matchrawStatsCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Summoner (" + summoner + ") cannot be destroyed since the MatchrawStats " + matchrawStatsCollectionOrphanCheckMatchrawStats + " in its matchrawStatsCollection field has a non-nullable summoner field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(summoner);
             utx.commit();
@@ -224,6 +158,15 @@ public class SummonerJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+        public List<Summoner> findSummonerByName(String name) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Summoner.findBySummonerName").setParameter("summonerName",name).getResultList();
         } finally {
             em.close();
         }

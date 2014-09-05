@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,15 +25,16 @@ public class MatchrawStatsPK implements Serializable {
     private long gameId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "summonerId")
-    private long summonerId;
+    @Size(min = 1, max = 30)
+    @Column(name = "summonerName")
+    private String summonerName;
 
     public MatchrawStatsPK() {
     }
 
-    public MatchrawStatsPK(long gameId, long summonerId) {
+    public MatchrawStatsPK(long gameId, String summonerName) {
         this.gameId = gameId;
-        this.summonerId = summonerId;
+        this.summonerName = summonerName;
     }
 
     public long getGameId() {
@@ -43,19 +45,19 @@ public class MatchrawStatsPK implements Serializable {
         this.gameId = gameId;
     }
 
-    public long getSummonerId() {
-        return summonerId;
+    public String getSummonerName() {
+        return summonerName;
     }
 
-    public void setSummonerId(long summonerId) {
-        this.summonerId = summonerId;
+    public void setSummonerName(String summonerName) {
+        this.summonerName = summonerName;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) gameId;
-        hash += (int) summonerId;
+        hash += (summonerName != null ? summonerName.hashCode() : 0);
         return hash;
     }
 
@@ -69,7 +71,7 @@ public class MatchrawStatsPK implements Serializable {
         if (this.gameId != other.gameId) {
             return false;
         }
-        if (this.summonerId != other.summonerId) {
+        if ((this.summonerName == null && other.summonerName != null) || (this.summonerName != null && !this.summonerName.equals(other.summonerName))) {
             return false;
         }
         return true;
@@ -77,7 +79,7 @@ public class MatchrawStatsPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lolprocn.dbentities.MatchrawStatsPK[ gameId=" + gameId + ", summonerId=" + summonerId + " ]";
+        return "com.lolprocn.dbentities.MatchrawStatsPK[ gameId=" + gameId + ", summonerName=" + summonerName + " ]";
     }
     
 }

@@ -93,7 +93,16 @@ winner	boolean	Flag indicating whether or not the participant won
     long minionsKilled;
     long totalDamageDealtToChampions;
     long totalDamageTaken;
+    boolean winner;
 
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+    }
+    
     public long getAssists() {
         return assists;
     }

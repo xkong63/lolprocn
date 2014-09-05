@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"       
+      xmlns:p="http://primefaces.org/ui">
     <h:body>
         <ui:composition template="./template/template.xhtml">
             <ui:define name="content">
@@ -22,15 +22,17 @@
                         </div>
                     </div>
                 </div>
+
                 <h:form>
                     <p:panelGrid columns="4" id="parent"> 
                         <p:panelGrid columns="2">
                             <p:commandButton  value="Profile" update="parent" action="#{panelUpdate.stat_display()}">
 
                             </p:commandButton>
-                            <p:button  value="Matchs" onclick="toggle()">
 
-                            </p:button>
+                            <p:commandButton  value="Recent Matches" update="parent" action="#{panelUpdate.match_display()}">
+
+                            </p:commandButton>
                             <p:commandButton  value="Masteries" update="parent" action="#{panelUpdate.mastery_display()}" >
 
                             </p:commandButton>
@@ -114,7 +116,31 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
+                        <h:panelGrid rendered="#{panelUpdate.render_match}">
+                            <p:dataScroller value="#{data.matchPanel.summonerGameDatas}" var="summonerData" chunkSize="20">
+                                <f:facet name="header">
+                                    Recent Match History
+                                </f:facet>
+                                <p:panelGrid columns="2" style="width:100%">
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputText value="MatchId:" />
+                                            <h:outputText value="#{summonerData.matchId}" style="font-weight: bold"/>
 
+                                            <h:graphicImage  value='./resources/images/bundle/4.15.1/img/champion/#{summonerData.championName}.png' style="height:50px;width:50px;"/>
+                                            <h:outputText value="#{summonerData.championName}" />
+                                            
+                                            <h:outputText value="Summoner:" />
+                                            <h:outputText value="#{summonerData.summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="#{summonerData.winner}" style="font-weight: bold"/>
+                                            <h:outputText value="" />
+
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                </p:panelGrid>
+                            </p:dataScroller>
+                        </h:panelGrid>
                         <h:panelGrid rendered="#{panelUpdate.render_mastery}">
                             <!--                            <f:facet name="header">
                                                             <h:outputText value="masteries"/>

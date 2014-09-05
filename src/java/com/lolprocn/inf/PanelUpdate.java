@@ -26,6 +26,7 @@ public class PanelUpdate {
     boolean render_stat=true;
     boolean render_mastery=false;
     boolean render_rune=false;
+    boolean render_match=false;
     public PanelUpdate() {
         
     }
@@ -54,24 +55,40 @@ public class PanelUpdate {
         this.render_rune = render_rune;
     }
 
+    public boolean isRender_match() {
+        return render_match;
+    }
+
+    public void setRender_match(boolean render_match) {
+        this.render_match = render_match;
+    }
+
     
     public void mastery_display(){
         render_mastery=true;
         render_stat=false;
         render_rune=false;
+        render_match=false;
     }
     
       public void rune_display(){
         render_rune=true;
         render_stat=false;
         render_mastery=false;
+        render_match=false;
     }
       
             public void stat_display(){
         render_rune=false;
         render_stat=true;
         render_mastery=false;
+        render_match=false;
     }
     
-    
+                public void match_display(){
+        render_rune=false;
+        render_stat=false;
+        render_mastery=false;
+        render_match=true;
+    }
 }

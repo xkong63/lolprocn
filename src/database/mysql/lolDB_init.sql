@@ -31,7 +31,7 @@ PRIMARY KEY(summonerId)
 
 CREATE TABLE  match_rawStats(
 gameId BIGINT UNSIGNED,
-summonerId BIGINT UNSIGNED,
+summonerName VARCHAR(30),
 championId INT UNSIGNED,
 spell1Id INT UNSIGNED,
 spell2Id INT UNSIGNED,
@@ -53,11 +53,10 @@ teamId INT UNSIGNED,
 level TINYINT UNSIGNED,
 goldEarned INT UNSIGNED,
 win BOOLEAN,
-PRIMARY KEY(gameId,summonerId),
-INDEX(summonerId),
+PRIMARY KEY(gameId,summonerName),
+INDEX(summonerName),
 INDEX(gameId),
-FOREIGN KEY(gameId) REFERENCES matches(gameId),
-FOREIGN KEY(summonerId) REFERENCES summoner(summonerId)
+FOREIGN KEY(gameId) REFERENCES matches(gameId)
 );
 
 

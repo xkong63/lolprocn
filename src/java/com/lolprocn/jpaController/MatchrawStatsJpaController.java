@@ -14,7 +14,6 @@ import javax.persistence.criteria.Root;
 import com.lolprocn.dbentities.Matches;
 import com.lolprocn.dbentities.MatchrawStats;
 import com.lolprocn.dbentities.MatchrawStatsPK;
-import com.lolprocn.dbentities.Summoner;
 import com.lolprocn.jpaController.exceptions.NonexistentEntityException;
 import com.lolprocn.jpaController.exceptions.PreexistingEntityException;
 import com.lolprocn.jpaController.exceptions.RollbackFailureException;
@@ -44,7 +43,6 @@ public class MatchrawStatsJpaController implements Serializable {
         if (matchrawStats.getMatchrawStatsPK() == null) {
             matchrawStats.setMatchrawStatsPK(new MatchrawStatsPK());
         }
-        matchrawStats.getMatchrawStatsPK().setSummonerId(matchrawStats.getSummoner().getSummonerId());
         matchrawStats.getMatchrawStatsPK().setGameId(matchrawStats.getMatches().getGameId());
         EntityManager em = null;
         try {
@@ -55,19 +53,10 @@ public class MatchrawStatsJpaController implements Serializable {
                 matches = em.getReference(matches.getClass(), matches.getGameId());
                 matchrawStats.setMatches(matches);
             }
-            Summoner summoner = matchrawStats.getSummoner();
-            if (summoner != null) {
-                summoner = em.getReference(summoner.getClass(), summoner.getSummonerId());
-                matchrawStats.setSummoner(summoner);
-            }
             em.persist(matchrawStats);
             if (matches != null) {
                 matches.getMatchrawStatsCollection().add(matchrawStats);
                 matches = em.merge(matches);
-            }
-            if (summoner != null) {
-                summoner.getMatchrawStatsCollection().add(matchrawStats);
-                summoner = em.merge(summoner);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -88,7 +77,6 @@ public class MatchrawStatsJpaController implements Serializable {
     }
 
     public void edit(MatchrawStats matchrawStats) throws NonexistentEntityException, RollbackFailureException, Exception {
-        matchrawStats.getMatchrawStatsPK().setSummonerId(matchrawStats.getSummoner().getSummonerId());
         matchrawStats.getMatchrawStatsPK().setGameId(matchrawStats.getMatches().getGameId());
         EntityManager em = null;
         try {
@@ -97,15 +85,9 @@ public class MatchrawStatsJpaController implements Serializable {
             MatchrawStats persistentMatchrawStats = em.find(MatchrawStats.class, matchrawStats.getMatchrawStatsPK());
             Matches matchesOld = persistentMatchrawStats.getMatches();
             Matches matchesNew = matchrawStats.getMatches();
-            Summoner summonerOld = persistentMatchrawStats.getSummoner();
-            Summoner summonerNew = matchrawStats.getSummoner();
             if (matchesNew != null) {
                 matchesNew = em.getReference(matchesNew.getClass(), matchesNew.getGameId());
                 matchrawStats.setMatches(matchesNew);
-            }
-            if (summonerNew != null) {
-                summonerNew = em.getReference(summonerNew.getClass(), summonerNew.getSummonerId());
-                matchrawStats.setSummoner(summonerNew);
             }
             matchrawStats = em.merge(matchrawStats);
             if (matchesOld != null && !matchesOld.equals(matchesNew)) {
@@ -115,14 +97,6 @@ public class MatchrawStatsJpaController implements Serializable {
             if (matchesNew != null && !matchesNew.equals(matchesOld)) {
                 matchesNew.getMatchrawStatsCollection().add(matchrawStats);
                 matchesNew = em.merge(matchesNew);
-            }
-            if (summonerOld != null && !summonerOld.equals(summonerNew)) {
-                summonerOld.getMatchrawStatsCollection().remove(matchrawStats);
-                summonerOld = em.merge(summonerOld);
-            }
-            if (summonerNew != null && !summonerNew.equals(summonerOld)) {
-                summonerNew.getMatchrawStatsCollection().add(matchrawStats);
-                summonerNew = em.merge(summonerNew);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -162,11 +136,6 @@ public class MatchrawStatsJpaController implements Serializable {
             if (matches != null) {
                 matches.getMatchrawStatsCollection().remove(matchrawStats);
                 matches = em.merge(matches);
-            }
-            Summoner summoner = matchrawStats.getSummoner();
-            if (summoner != null) {
-                summoner.getMatchrawStatsCollection().remove(matchrawStats);
-                summoner = em.merge(summoner);
             }
             em.remove(matchrawStats);
             utx.commit();
@@ -228,6 +197,23 @@ public class MatchrawStatsJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+        public List<MatchrawStats> findMatchrawStatsBySummonerName(String name) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("MatchrawStats.findBySummonerName",MatchrawStats.class).setParameter("summonerName", name).getResultList();
+        } finally {
+            em.close();
+        }}
+               public List<MatchrawStats> findMatchrawStatsByMatchId(long matchId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("MatchrawStats.findByGameId",MatchrawStats.class).setParameter("gameId", matchId).getResultList();
+        } finally {
+            em.close();
+        }
+        
     }
     
 }

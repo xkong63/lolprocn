@@ -6,14 +6,18 @@
 
 package com.lolprocn.entity.rankMatch;
 
+import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Apollowc
  */
-public class MatchSummary {
+public class MatchSummary implements Serializable {
     /*
     mapId	int	Match map ID
 matchCreation	long	Match creation time
