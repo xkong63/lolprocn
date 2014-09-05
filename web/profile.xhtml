@@ -129,12 +129,45 @@
 
                                             <h:graphicImage  value='./resources/images/bundle/4.15.1/img/champion/#{summonerData.championName}.png' style="height:50px;width:50px;"/>
                                             <h:outputText value="#{summonerData.championName}" />
-                                            
+
                                             <h:outputText value="Summoner:" />
                                             <h:outputText value="#{summonerData.summonerName}" style="font-weight: bold"/>
 
                                             <h:outputText value="#{summonerData.winner}" style="font-weight: bold"/>
                                             <h:outputText value="" />
+
+                                            <h:outputText value="Game Time" />
+                                            <h:outputText value="#{summonerData.matchCreatTime}" style="font-weight: bold"/>
+
+                                            <h:outputText value="friend team0" />
+                                            <h:outputText value="#{summonerData.friends[0].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="enemy team0" />
+                                            <h:outputText value="#{summonerData.enemy[0].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="friend team1" />
+                                            <h:outputText value="#{summonerData.friends[1].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="enemy team1" />
+                                            <h:outputText value="#{summonerData.enemy[1].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="friend team2" />
+                                            <h:outputText value="#{summonerData.friends[2].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="enemy team2" />
+                                            <h:outputText value="#{summonerData.enemy[2].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="friend team3" />
+                                            <h:outputText value="#{summonerData.friends[3].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="enemy team3" />
+                                            <h:outputText value="#{summonerData.enemy[3].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="friend team4" />
+                                            <h:outputText value="#{summonerData.friends[4].summonerName}" style="font-weight: bold"/>
+
+                                            <h:outputText value="enemy team4" />
+                                            <h:outputText value="#{summonerData.enemy[4].summonerName}" style="font-weight: bold"/>
 
                                         </h:panelGrid>
                                     </p:outputPanel>
